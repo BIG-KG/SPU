@@ -3,12 +3,14 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]){
-	
+
 	FILE *inputFile  = fopen (argv[1] ,         "r");
-	FILE *outputFile = fopen ("compilled.txt" , "w");	
+	FILE *outputFile = fopen ("compilled.txt" , "w");
 	char command[30] = "";
-	
+
     while(  fscanf (inputFile, "%s", &command) != EOF  ){
+
+        printf("tt\n");
 
         if      (strcmp (command, "psh") == 0){
             int a = 0;
@@ -41,14 +43,14 @@ int main(int argc, char *argv[]){
         }
 
         else{
-			
+
             printf ("Syntax error _%s_\n", command);
 			return 1;
         }
     }
-	
+
 	fclose(inputFile);
 	fclose(outputFile);
-	
+
 	return 0;
 }

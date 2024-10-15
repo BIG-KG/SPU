@@ -11,16 +11,28 @@ void main_runner(FILE *openingFile)
         int command = -2;
         int64_t stc = stack_ctor();
 
-        while(1){
+        printf("2\n");
 
-            if(fscanf (openingFile, "%d", &command) == EOF){
-                return;
-            }
+        int ip = 0;
+        int commands[256] = {};
+
+        printf("3\n");
+
+
+        while (fscanf(openingFile ,"%d", &commands[ip]) != EOF){
+            ip++;
+        }
+
+        int numOFComm = ip;
+        ip = 0;
+
+        while(ip < numOFComm){
+
+            command = commands[ip];
 
             if      (command ==  1){
-                int a = 0;
-                fscanf (openingFile, "%d", &a);
-                push (stc, a);
+                ip++;
+                push (stc, commands[ip]);
             }
 
             else if (command ==  2){
@@ -56,6 +68,8 @@ void main_runner(FILE *openingFile)
                 printf ("Syntax error _%d_", command);
                 return;
             }
+
+            ip++;
         }
 
         stack_dtor(stc);
@@ -65,9 +79,14 @@ void main_runner(FILE *openingFile)
 
 int main(int argc, char *argv[])
 {
+    printf("0\n");
+
     FILE *readingFile = fopen (argv[1] , "r");
 
+    printf("1\n");
+
     main_runner (readingFile);
+
 
     fclose(readingFile);
 
