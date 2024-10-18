@@ -1,7 +1,7 @@
 all: hello
 	
-hello: main.o stackfunk.o const.o canary.o inner_stack_metods.o
-	g++ main.o stackfunk.o const.o canary.o inner_stack_metods.o -o hello2
+hello: main.o stackfunk.o const.o canary.o inner_stack_metods.o onegin.o
+	g++ main.o stackfunk.o const.o canary.o inner_stack_metods.o onegin.o -o hello2
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -17,6 +17,9 @@ const.o: C:\MIPT\SPU\stack\const.cpp
 	
 canary.o: C:\MIPT\SPU\stack\canary.cpp
 	g++ -c C:\MIPT\SPU\stack\canary.cpp
+
+onegin.o: C:\MIPT\SPU\onegin\onegin.cpp
+	g++ -c C:\MIPT\SPU\onegin\onegin.cpp 
 
 clean:
 	rm -rf *.o hello2

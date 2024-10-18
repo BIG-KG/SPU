@@ -1,5 +1,5 @@
 psh 5
 psh 1
 sub
-res
+lok
 end

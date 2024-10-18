@@ -1,72 +1,128 @@
 #include "C:\MIPT\SPU\stack\stack_funk.h"
-
 #include "C:\MIPT\SPU\stack\errors.h"
-
 #include "C:\MIPT\SPU\stack\const.h"
+
+#include "C:\MIPT\SPU\onegin\onegin.h"
 
 #include <string.h>
 
-void main_runner(FILE *openingFile)
+int file_to_array(int **commandsArray, int file);
+
+enum SPU_commands{
+    RET = -1,
+    POP = 0,
+    PSH = 1,
+    ADD = 2,
+    MUL = 3,
+    SUB = 4,
+    DIV = 5,
+    LUK = 6,
+    JMP = 7,
+    JMPM,
+    JMPL,
+    JMPE,
+    JMPME,
+    JMPLE
+
+};
+
+
+void main_runner(int commandsFile)
 {
-        int command = -2;
-        int64_t stc = stack_ctor();
+        int64_t stc       = stack_ctor();
+        int ip            = 0 ;
+        int *commands     = NULL;
+        int numOfCommands = 0 ;
+        int registers[5]  = {};
+        int a             = 0;
+        int b             = 0;
 
-        printf("2\n");
+        numOfCommands = file_to_array(&commands, commandsFile);
 
-        int ip = 0;
-        int commands[256] = {};
-
-        printf("3\n");
-
-
-        while (fscanf(openingFile ,"%d", &commands[ip]) != EOF){
-            ip++;
+        for(int i = 0; i < numOfCommands; i ++){
+            printf("_%d_\n", commands[i]);
         }
 
-        int numOFComm = ip;
-        ip = 0;
+        printf("\n\n\n");
 
-        while(ip < numOFComm){
+        while(ip < numOfCommands){
 
-            command = commands[ip];
+            commands[ip];
 
-            if      (command ==  1){
-                ip++;
-                push (stc, commands[ip]);
-            }
+            switch (commands[ip]){
+                case PSH:
+                    ip++;
+                    push (stc, commands[ip]);
+                    break;
 
-            else if (command ==  2){
-                push (stc, pop (stc) + pop (stc));
+                case ADD:
+                    push (stc, pop (stc) + pop (stc));
+                    break;
 
-            }
+                case MUL:
+                    push (stc, pop (stc) * pop (stc));
+                    break;
 
-            else if (command ==  3){
-                push (stc, pop (stc) * pop (stc));
-            }
+                case SUB:
+                    a = pop (stc);
+                    b = pop (stc);
+                    push (stc, b - a);
+                    break;
 
-            else if (command ==  4){
-                int a = pop (stc);
-                int b = pop (stc);
-                push (stc, b - a);
-            }
+                case DIV:
+                    a = pop (stc);
+                    b = pop (stc);
+                    push (stc, b / a);
+                    break;
 
-            else if (command ==  5){
-                int a = pop (stc);
-                int b = pop (stc);
-                push (stc, b / a);
-            }
+                case POP:
+                    printf ("%d", pop (stc) );
+                    break;
 
-            else if (command ==  0){
-                printf ("%d", pop (stc));
-            }
+                case RET:
+                    ip = numOfCommands + 1;  //easy break cycle, using while condition
+                    break;
 
-            else if (command == -1){
-                break;
-            }
+                case LUK:
+                    printf ("%d", look (stc, 0));
+                    break;
 
-            else{
-                printf ("Syntax error _%d_", command);
-                return;
+                case JMP:
+                    ip = commands[ip + 1];
+                    break;
+
+                case JMPM:
+                    a = pop (stc);
+                    b = pop (stc);
+                    if (a > b) ip = commands[ip + 1];
+                    break;
+
+                case JMPL:
+                    a = pop (stc);
+                    b = pop (stc);
+                    if (a < b) ip = commands[ip + 1];
+                    break;
+
+                case JMPE:
+                    a = pop (stc);
+                    b = pop (stc);
+                    if (a == b) ip = commands[ip + 1];
+                    break;
+
+                case JMPME:
+                    a = pop (stc);
+                    b = pop (stc);
+                    if (a >= b) ip = commands[ip + 1];
+                    break;
+
+                case JMPLE:
+                    a = pop (stc);
+                    b = pop (stc);
+                    if (a <= b) ip = commands[ip + 1];
+                    break;
+
+                default:
+                    printf ("Syntax error _%d_", commands[ip]);
             }
 
             ip++;
@@ -79,16 +135,32 @@ void main_runner(FILE *openingFile)
 
 int main(int argc, char *argv[])
 {
-    printf("0\n");
+    int *commandsArray = NULL;
 
-    FILE *readingFile = fopen (argv[1] , "r");
+    int commandsFile = open(argv[1], _O_BINARY | O_RDONLY );
 
-    printf("1\n");
+    //int num = file_to_array(&commandsArray, commandsFile);
+    main_runner (commandsFile);
 
-    main_runner (readingFile);
-
-
-    fclose(readingFile);
+    close(commandsFile);
 
     return 0;
+}
+
+int file_to_array(int **commandsArray, int inputFile){
+
+    static int commands[512] = {};
+    *commandsArray = commands;
+
+    char *allStr                   = NULL;
+    string_start_end *stringsArray = NULL;
+    int numStrings                 = enter_text_struct(&stringsArray, inputFile, &allStr);
+
+    for(int i = 0; i < numStrings; i ++){
+        commands[i] = atoi (  (stringsArray[i]).startl  );
+    }
+
+    close(inputFile);
+
+    return numStrings;
 }
