@@ -4,26 +4,8 @@
 #include <assert.h>
 #include <ctype.h>
 
-enum SPU_math_commands{
-    RET = -1,
-    POP = 0,
-    PSH = 1,
-    ADD = 2,
-    MUL = 3,
-    SUB = 4,
-    DIV = 5,
-    LUK = 6,
-    JMP = 7,
-    JMPM,
-    JMPL,
-    JMPE,
-    JMPME,
-    JMPLE,
-    JMPREG,
-    CALL,
-    RETURN
+#include "enums.cpp"
 
-};
 
 struct tag{
     char name[32] = {};
@@ -42,8 +24,8 @@ int check_input_value(int returningMode, int typeOfMemory);
 
 
 
-int main(int argc, char *argv[]){
-
+int main(int argc, char *argv[])
+{
 	FILE *inputFile   = fopen (argv[1] ,         "r");
 	FILE *outputFile  = fopen ("compilled.txt" , "w");
 	char command[30]  = "";
@@ -53,115 +35,128 @@ int main(int argc, char *argv[]){
 
 	find_tags(inputFile, tagsArray);
 
-    while(  fscanf (inputFile, "%s", &command) != EOF  ){
-
+    while(  fscanf (inputFile, "%s", &command) != EOF  )
+    {
         printf("%s\n", command);
 
 
-        if      (strcmp (command, "push") == 0){
-
+        if      (strcmp (command, "push") == 0)
+        {
             fprintf (outputFile, "%d ", PSH);
             compile_args(inputFile, outputFile, REED);
 
         }
 
-        else if (strcmp (command, "add") == 0){
+
+        else if (strcmp (command, "add") == 0)
+        {
 			fprintf (outputFile, "%d\n", ADD);
         }
 
-        else if (strcmp (command, "mul") == 0){
+
+        else if (strcmp (command, "mul") == 0)
+        {
             fprintf (outputFile, "%d\n", MUL);
         }
 
-        else if (strcmp (command, "sub") == 0){
+
+        else if (strcmp (command, "sub") == 0)
+        {
             fprintf (outputFile, "%d\n", SUB);
         }
 
-        else if (strcmp (command, "div") == 0){
+
+        else if (strcmp (command, "div") == 0)
+        {
             fprintf (outputFile, "%d\n", DIV);
         }
 
-        else if (strcmp (command, "look") == 0){
+
+        else if (strcmp (command, "look") == 0)
+        {
             fprintf (outputFile, "%d\n", LUK);
         }
 
-        else if (strcmp (command, "pop") == 0){
+
+        else if (strcmp (command, "pop") == 0)
+        {
             printf("current");
             fprintf (outputFile, "%d ", POP);
             compile_args(inputFile, outputFile, WRITE);
         }
 
-        else if (strcmp (command, "end") == 0){
+
+        else if (strcmp (command, "end") == 0)
+        {
             fprintf (outputFile, "%d\n", RET);
         }
 
-        else if (strcmp (command, "jmp") == 0){
-            int a = 0;
-            printf("start obr\n");
-            if (  fscanf (inputFile, "%d", &a) == 0  ){
-                fscanf(inputFile, "%s", command);
-                if(  (command[0] != ':') || (command[1]) == '\0' ){
-                    printf("MILORD, WRONG JUMP VALUE");
-                }
-                a = get_tag (command + 1, tagsArray);
-            }
 
-            fprintf (outputFile, "%d %d\n", JMP, a);
+        else if (strcmp (command, "jmp") == 0)
+        {
+            jump_argument(tagsArray, inputFile, JMP);
         }
 
-        else if (strcmp (command, "jmpm")   == 0){
-            int a = 0;
-            fscanf  (inputFile, "%d", &a);
-            fprintf (outputFile, "%d %d\n", JMPM, a);
+
+        else if (strcmp (command, "jmpm")   == 0)
+        {
+            jump_argument(tagsArray, inputFile, JMPM);
         }
 
-        else if (strcmp (command, "jmpl")   == 0){
-            int a = 0;
-            fscanf  (inputFile, "%d", &a);
-            fprintf (outputFile, "%d %d\n", JMPL, a);
+
+        else if (strcmp (command, "jmpl")   == 0)
+        {
+            jump_argument(tagsArray, inputFile, JMPL);
         }
 
-        else if (strcmp (command, "jmpe")   == 0){
-            int a = 0;
-            fscanf  (inputFile, "%d", &a);
-            fprintf (outputFile, "%d %d\n", JMPE, a);
+
+        else if (strcmp (command, "jmpe")   == 0)
+        {
+            jump_argument(tagsArray, inputFile, JMPE);
         }
 
-        else if (strcmp (command, "jmpme")  == 0){
+
+        else if (strcmp (command, "jmpme")  == 0)
+        {
             int a = 0;
             fscanf  (inputFile, "%d", &a);
             fprintf (outputFile, "%d %d\n", JMPME, a);
         }
 
-        else if (strcmp (command, "jmple")  == 0){
+
+        else if (strcmp (command, "jmple")  == 0)
+        {
             int a = 0;
             fscanf  (inputFile, "%d", &a);
             fprintf (outputFile, "%d %d\n", JMPLE, a);
         }
 
-        else if (strcmp (command, "call") == 0){
+
+        else if (strcmp (command, "call") == 0)
+        {
             int a = 0;
             if (  fscanf (inputFile, "%d", &a) == 0  )
             {
                 fscanf(inputFile, "%s", command);
                 if (  (command[0] != ':') || (command[1]) == '\0' )
                 {
-                    printf("MILORD, WRONG JUMP VALUE");
+                    printf("MILORD, WRONG CALL VALUE");
                 }
                 a = get_tag (command + 1, tagsArray);
             }
             fprintf (outputFile, "%d %d\n", CALL, a);
         }
 
-        else if (strcmp (command, "ret") == 0){
+
+        else if (strcmp (command, "ret") == 0)
+        {
 			fprintf (outputFile, "%d\n",  RETURN);
         }
 
-        else if ( command[0] == '^'){
-            ;
-        }
+        else if ( command[0] == '^') ;
 
-        else{
+        else
+        {
             printf ("Syntax error _%s_\n", command);
             printf("firs sim ~%c~\n", command[0]);
 			return 1;
@@ -191,6 +186,8 @@ int find_tags(FILE *inputFile, tag *tagsArray){
         lastEl = command[commandlen - 1];
         printf("qwer\n");
 
+        printf("popppppppp    string = _%s_    lastel = _%c_        curr ip = %d\n", command, lastEl, ip);
+
         if (command[0] == '^')
         {
             sscanf ( &command[1], "%s", (tagsArray[i]).name );
@@ -202,7 +199,9 @@ int find_tags(FILE *inputFile, tag *tagsArray){
                 i++;
         }
 
-        printf("popppppppp    string = _%s_    lastel = _%c_\n", command, lastEl);
+        else{
+            ip++;
+        }
 
         if ( lastEl == ']' || lastEl == 'X' || isdigit(lastEl) )
         {
@@ -215,7 +214,6 @@ int find_tags(FILE *inputFile, tag *tagsArray){
                 if(command[i] == '+') ip ++;
             }
         }
-        ip ++;
     }
 
     fseek(inputFile, 0, SEEK_SET);
@@ -315,3 +313,22 @@ int check_input_value(int returningMode, int typeOfMemory)
 
     return 0;
 }
+
+int jump_argument(tag *tagsArray, FILE *inputFile, int jumpType)
+    {
+        int a = 0;
+        char command[30] = {};
+
+        if (  fscanf (inputFile, "%d", &a) == 0  )
+        {
+            fscanf(inputFile, "%s", command);
+
+            if(  (command[0] != ':') || (command[1]) == '\0' )
+            {
+                printf("MILORD, WRONG JUMP VALUE");
+            }
+            a = get_tag (command + 1, tagsArray);
+        }
+
+        fprintf (outputFile, "%d %d\n", jumpType, a);
+    }

@@ -1,34 +1,16 @@
 #include "C:\MIPT\SPU\stack\stack_funk.h"
 #include "C:\MIPT\SPU\stack\errors.h"
 #include "C:\MIPT\SPU\stack\const.h"
-
 #include "C:\MIPT\SPU\onegin\onegin.h"
 
 #include <string.h>
 
+#include "enums.cpp"
+
 int file_to_array(int **commandsArray, int file);
 
 
-enum SPU_math_commands{
-    RET = -1,
-    POP = 0,
-    PSH = 1,
-    ADD = 2,
-    MUL = 3,
-    SUB = 4,
-    DIV = 5,
-    LUK = 6,
-    JMP = 7,
-    JMPM,
-    JMPL,
-    JMPE,
-    JMPME,
-    JMPLE,
-    JMPREG,
-    CALL,
-    RETURN
 
-};
 
 struct SPU_type{
     int64_t stc       = 0;
@@ -53,7 +35,7 @@ void main_runner(int commandsFile)
     SPU.numOfCommands = file_to_array(&SPU.commands, commandsFile);
 
     for(int i = 0; i < SPU.numOfCommands; i ++){
-        printf("_%d_\n", SPU.commands[i]);
+        printf("%d   _%d_\n", i, SPU.commands[i]);
     }
 
     printf("\n\n\n");
@@ -64,30 +46,24 @@ void main_runner(int commandsFile)
         switch (SPU.commands[SPU.ip]){
             case PSH:
                 argument = get_arg(&SPU);
-                printf("333\n");
                 push (SPU.stc, *argument);
-                printf("444\n");
                 break;
 
             case ADD:
-                printf("t11\n");
                 push (SPU.stc, pop (SPU.stc) + pop (SPU.stc));
                 break;
 
             case MUL:
-                printf("t10");
                 push (SPU.stc, pop (SPU.stc) * pop (SPU.stc));
                 break;
 
             case SUB:
-                printf("t1");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
                 push (SPU.stc, b - a);
                 break;
 
             case DIV:
-                printf("t2");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
                 push (SPU.stc, b / a);
@@ -96,9 +72,7 @@ void main_runner(int commandsFile)
 
             case POP:
                 argument = get_arg(&SPU);
-                printf("111\n");
                 *argument = pop(SPU.stc);
-                printf("222\n");
                 break;
 
             case RET:
@@ -106,7 +80,7 @@ void main_runner(int commandsFile)
                 break;
 
             case LUK:
-                printf("t9");
+                printf("rppc\n");
                 printf ("\n\nreturn = %d\n", pop (SPU.stc));
                 break;
 
@@ -116,31 +90,34 @@ void main_runner(int commandsFile)
                 break;
 
             case JMPM:
-                printf("t3");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
-                SPU.ip ++;
-                if (a > b) SPU.ip = SPU.commands[SPU.ip];
+                if (a > b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
                 break;
 
             case JMPL:
-                printf("t4");
+                printf("111\n");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
-                SPU.ip ++;
-                if (a < b) SPU.ip = SPU.commands[SPU.ip];
+                printf("222\n");
+                if (a < b)  SPU.ip = SPU.commands[SPU.ip + 1] - 1;
                 break;
 
             case JMPE:
-                printf("t5");
+                printf("555\n");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
-                SPU.ip ++;
-                if (a == b) SPU.ip = SPU.commands[SPU.ip];
+                printf("666\n");
+                if (a == b)
+                {
+                    a = SPU.commands[SPU.ip + 1];
+                    SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+                    printf("check\n");
+                }
+                printf("current ip = %d,   x%d        a = %d\n", SPU.ip, SPU.commands[SPU.ip], a);
                 break;
 
             case JMPME:
-                printf("t6");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
                 SPU.ip ++;
@@ -148,7 +125,6 @@ void main_runner(int commandsFile)
                 break;
 
             case JMPLE:
-                printf("t7");
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
                 SPU.ip ++;
@@ -226,14 +202,12 @@ int *get_arg(SPU_type* SPU)
     {
         SPU->ip ++;
         argument = &(SPU->registers)[(SPU->commands)[SPU->ip]];
-        printf("case1\n");
     }
 
     if (  (mode & 1) != 0)
     {
         SPU->ip++;
         containedEl = (SPU->commands)[SPU->ip];
-        printf("case2  %d\n", mode);
         if ((mode & 2) == 0) argument = &containedEl;
     }
 
@@ -246,7 +220,6 @@ int *get_arg(SPU_type* SPU)
 
     if( (mode & 4)  != 0)
     {
-        printf("case3 %d\n", mode);
         argument = &(SPU->RAM)[*argument];
     }
     printf("\n\n");
