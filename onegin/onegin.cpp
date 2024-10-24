@@ -69,4 +69,3 @@ int file_size(int targetFile){
 	return file_size;
 
 }
-

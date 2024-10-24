@@ -8,7 +8,8 @@
 
 int file_to_array(int **commandsArray, int file);
 
-enum SPU_commands{
+
+enum SPU_math_commands{
     RET = -1,
     POP = 0,
     PSH = 1,
@@ -22,113 +23,161 @@ enum SPU_commands{
     JMPL,
     JMPE,
     JMPME,
-    JMPLE
+    JMPLE,
+    JMPREG,
+    CALL,
+    RETURN
 
 };
 
+struct SPU_type{
+    int64_t stc       = 0;
+    int64_t returns   = 0;
+    int ip            = 0;
+    int *commands     = NULL;
+    int numOfCommands = 0;
+    int registers[5]  = {};
+    int RAM[100]      = {};
+};
+
+int *get_arg(SPU_type* SPU);
 
 void main_runner(int commandsFile)
 {
-        int64_t stc       = stack_ctor();
-        int ip            = 0 ;
-        int *commands     = NULL;
-        int numOfCommands = 0 ;
-        int registers[5]  = {};
-        int a             = 0;
-        int b             = 0;
+    SPU_type SPU      = {};
+    SPU.stc           = stack_ctor();
+    SPU.returns       = stack_ctor();
+    int a             = 0;
+    int b             = 0;
 
-        numOfCommands = file_to_array(&commands, commandsFile);
+    SPU.numOfCommands = file_to_array(&SPU.commands, commandsFile);
 
-        for(int i = 0; i < numOfCommands; i ++){
-            printf("_%d_\n", commands[i]);
+    for(int i = 0; i < SPU.numOfCommands; i ++){
+        printf("_%d_\n", SPU.commands[i]);
+    }
+
+    printf("\n\n\n");
+    int *argument = NULL;
+
+    while(SPU.ip < SPU.numOfCommands){
+
+        switch (SPU.commands[SPU.ip]){
+            case PSH:
+                argument = get_arg(&SPU);
+                printf("333\n");
+                push (SPU.stc, *argument);
+                printf("444\n");
+                break;
+
+            case ADD:
+                printf("t11\n");
+                push (SPU.stc, pop (SPU.stc) + pop (SPU.stc));
+                break;
+
+            case MUL:
+                printf("t10");
+                push (SPU.stc, pop (SPU.stc) * pop (SPU.stc));
+                break;
+
+            case SUB:
+                printf("t1");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                push (SPU.stc, b - a);
+                break;
+
+            case DIV:
+                printf("t2");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                push (SPU.stc, b / a);
+                //printf("div = %d\n", b / a);
+                break;
+
+            case POP:
+                argument = get_arg(&SPU);
+                printf("111\n");
+                *argument = pop(SPU.stc);
+                printf("222\n");
+                break;
+
+            case RET:
+                SPU.ip = SPU.numOfCommands + 1;  //easy break cycle, using while condition
+                break;
+
+            case LUK:
+                printf("t9");
+                printf ("\n\nreturn = %d\n", pop (SPU.stc));
+                break;
+
+            case JMP:
+                SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+                //printf("     new SPU.ip = %d     ", SPU.ip);
+                break;
+
+            case JMPM:
+                printf("t3");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                SPU.ip ++;
+                if (a > b) SPU.ip = SPU.commands[SPU.ip];
+                break;
+
+            case JMPL:
+                printf("t4");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                SPU.ip ++;
+                if (a < b) SPU.ip = SPU.commands[SPU.ip];
+                break;
+
+            case JMPE:
+                printf("t5");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                SPU.ip ++;
+                if (a == b) SPU.ip = SPU.commands[SPU.ip];
+                break;
+
+            case JMPME:
+                printf("t6");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                SPU.ip ++;
+                if (a >= b) SPU.ip = SPU.commands[SPU.ip];
+                break;
+
+            case JMPLE:
+                printf("t7");
+                a = pop (SPU.stc);
+                b = pop (SPU.stc);
+                SPU.ip ++;
+                if (a <= b) SPU.ip = SPU.commands[SPU.ip];
+                break;
+
+            case JMPREG:
+                SPU.ip ++;
+                a = SPU.commands[SPU.ip];
+                SPU.ip = SPU.registers[a];
+                break;
+
+            case CALL:
+                push(SPU.returns, SPU.ip + 1);
+                SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+                break;
+
+            case RETURN:
+                SPU.ip = pop(SPU.returns);
+                break;
+
+            default:
+                printf ("\nSyntax error -%d-         ip = %d\n", SPU.commands[SPU.ip], SPU.ip);
         }
 
-        printf("\n\n\n");
+        SPU.ip++;
+    }
 
-        while(ip < numOfCommands){
-
-            commands[ip];
-
-            switch (commands[ip]){
-                case PSH:
-                    ip++;
-                    push (stc, commands[ip]);
-                    break;
-
-                case ADD:
-                    push (stc, pop (stc) + pop (stc));
-                    break;
-
-                case MUL:
-                    push (stc, pop (stc) * pop (stc));
-                    break;
-
-                case SUB:
-                    a = pop (stc);
-                    b = pop (stc);
-                    push (stc, b - a);
-                    break;
-
-                case DIV:
-                    a = pop (stc);
-                    b = pop (stc);
-                    push (stc, b / a);
-                    break;
-
-                case POP:
-                    printf ("%d", pop (stc) );
-                    break;
-
-                case RET:
-                    ip = numOfCommands + 1;  //easy break cycle, using while condition
-                    break;
-
-                case LUK:
-                    printf ("%d", look (stc, 0));
-                    break;
-
-                case JMP:
-                    ip = commands[ip + 1];
-                    break;
-
-                case JMPM:
-                    a = pop (stc);
-                    b = pop (stc);
-                    if (a > b) ip = commands[ip + 1];
-                    break;
-
-                case JMPL:
-                    a = pop (stc);
-                    b = pop (stc);
-                    if (a < b) ip = commands[ip + 1];
-                    break;
-
-                case JMPE:
-                    a = pop (stc);
-                    b = pop (stc);
-                    if (a == b) ip = commands[ip + 1];
-                    break;
-
-                case JMPME:
-                    a = pop (stc);
-                    b = pop (stc);
-                    if (a >= b) ip = commands[ip + 1];
-                    break;
-
-                case JMPLE:
-                    a = pop (stc);
-                    b = pop (stc);
-                    if (a <= b) ip = commands[ip + 1];
-                    break;
-
-                default:
-                    printf ("Syntax error _%d_", commands[ip]);
-            }
-
-            ip++;
-        }
-
-        stack_dtor(stc);
+    stack_dtor(SPU.stc);
 
 
 }
@@ -147,7 +196,8 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int file_to_array(int **commandsArray, int inputFile){
+int file_to_array(int **commandsArray, int inputFile)
+{
 
     static int commands[512] = {};
     *commandsArray = commands;
@@ -163,4 +213,43 @@ int file_to_array(int **commandsArray, int inputFile){
     close(inputFile);
 
     return numStrings;
+}
+
+int *get_arg(SPU_type* SPU)
+{
+    SPU->ip ++;
+    int mode      = (SPU->commands)[SPU->ip];
+    int *argument = NULL;
+    static int containedEl = 0;
+
+    if (  (mode & 2) != 0)
+    {
+        SPU->ip ++;
+        argument = &(SPU->registers)[(SPU->commands)[SPU->ip]];
+        printf("case1\n");
+    }
+
+    if (  (mode & 1) != 0)
+    {
+        SPU->ip++;
+        containedEl = (SPU->commands)[SPU->ip];
+        printf("case2  %d\n", mode);
+        if ((mode & 2) == 0) argument = &containedEl;
+    }
+
+    if (  (mode & 1) != 0 && (mode & 2) != 0  )
+    {
+        containedEl += *argument;
+        argument = &containedEl;
+    }
+
+
+    if( (mode & 4)  != 0)
+    {
+        printf("case3 %d\n", mode);
+        argument = &(SPU->RAM)[*argument];
+    }
+    printf("\n\n");
+
+    return argument;
 }
