@@ -1,0 +1,26 @@
+push 5
+call :frac
+look
+end
+
+
+^frac
+pop AX
+push AX
+push 1
+
+jmpe :one_end
+
+push AX 
+push AX
+push 1
+sub
+call :frac
+
+mul
+ret
+
+^one_end
+push 1
+ret
+

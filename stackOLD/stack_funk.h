@@ -5,7 +5,7 @@
         Stack_error_global = 0;                                     \
         stack_ok(a);                                                \
         if(Stack_error_global != 0){                                \
-            ("ERROR, error code= %d\n", Stack_error_global);       \
+            printf("ERROR, error code= %d\n", Stack_error_global);  \
             return Stack_error_global;                              \
         }                                                           \
 }
@@ -16,20 +16,18 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "stack_types.h"
-
 
 static int hasher(int64_t name, int changeHash);
 
-int64_t look(int64_t name, int ElNum);
+int look(int64_t name, int ElNum);
 
-int64_t push(int64_t name, stackEl pushingEl);
+int push(int64_t name, int pushingEl);
 
-int64_t pop(int64_t name);
+int pop(int64_t name);
 
 int64_t stack_ctor(void);
 
-int stack_size_chk (int64_t name, int addingSize);
+int stack_size_chk(int64_t name);
 
 void* stack_dump(int64_t name, int checkNeed);
 

@@ -4,13 +4,15 @@
 #include "C:\MIPT\SPU\onegin\onegin.h"
 
 #include <string.h>
+#include <math.h>
 
 #include "enums.cpp"
 
+#define FLOATIG_NUMS
+
+const int SCALING_FACTOR = 1000;
+
 int file_to_array(int **commandsArray, int file);
-
-
-
 
 struct SPU_type{
     int64_t stc       = 0;
@@ -29,8 +31,8 @@ void main_runner(int commandsFile)
     SPU_type SPU      = {};
     SPU.stc           = stack_ctor();
     SPU.returns       = stack_ctor();
-    int a             = 0;
-    int b             = 0;
+    int64_t a             = 0;
+    int64_t b             = 0;
 
     SPU.numOfCommands = file_to_array(&SPU.commands, commandsFile);
 
@@ -43,7 +45,12 @@ void main_runner(int commandsFile)
 
     while(SPU.ip < SPU.numOfCommands){
 
-        switch (SPU.commands[SPU.ip]){
+        switch (SPU.commands[SPU.ip])
+        {
+            case END:
+                SPU.ip = SPU.numOfCommands + 1;  //easy break cycle, using while condition
+                break;
+
             case PSH:
                 argument = get_arg(&SPU);
                 push (SPU.stc, *argument);
@@ -54,7 +61,7 @@ void main_runner(int commandsFile)
                 break;
 
             case MUL:
-                push (SPU.stc, pop (SPU.stc) * pop (SPU.stc));
+                push (SPU.stc, pop (SPU.stc) * pop (SPU.stc) / SCALING_FACTOR);
                 break;
 
             case SUB:
@@ -66,7 +73,7 @@ void main_runner(int commandsFile)
             case DIV:
                 a = pop (SPU.stc);
                 b = pop (SPU.stc);
-                push (SPU.stc, b / a);
+                push (SPU.stc, b / a * SCALING_FACTOR);
                 //printf("div = %d\n", b / a);
                 break;
 
@@ -75,13 +82,15 @@ void main_runner(int commandsFile)
                 *argument = pop(SPU.stc);
                 break;
 
-            case RET:
-                SPU.ip = SPU.numOfCommands + 1;  //easy break cycle, using while condition
-                break;
-
             case LUK:
                 printf("rppc\n");
+
+                #ifndef FLOATIG_NUMS
                 printf ("\n\nreturn = %d\n", pop (SPU.stc));
+                #else
+                printf ("\n\nreturn = %f\n", (float)pop (SPU.stc) / SCALING_FACTOR);
+                #endif // FLOATIG_NUMS
+
                 break;
 
             case JMP:
@@ -110,31 +119,8 @@ void main_runner(int commandsFile)
                 printf("666\n");
                 if (a == b)
                 {
-                    a = SPU.commands[SPU.ip + 1];
                     SPU.ip = SPU.commands[SPU.ip + 1] - 1;
-                    printf("check\n");
                 }
-                printf("current ip = %d,   x%d        a = %d\n", SPU.ip, SPU.commands[SPU.ip], a);
-                break;
-
-            case JMPME:
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                SPU.ip ++;
-                if (a >= b) SPU.ip = SPU.commands[SPU.ip];
-                break;
-
-            case JMPLE:
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                SPU.ip ++;
-                if (a <= b) SPU.ip = SPU.commands[SPU.ip];
-                break;
-
-            case JMPREG:
-                SPU.ip ++;
-                a = SPU.commands[SPU.ip];
-                SPU.ip = SPU.registers[a];
                 break;
 
             case CALL:
@@ -144,6 +130,10 @@ void main_runner(int commandsFile)
 
             case RETURN:
                 SPU.ip = pop(SPU.returns);
+                break;
+
+            case SQRT:
+                push(SPU.stc, sqrt (pop(SPU.stc)) * sqrt (SCALING_FACTOR) );
                 break;
 
             default:
@@ -208,6 +198,9 @@ int *get_arg(SPU_type* SPU)
     {
         SPU->ip++;
         containedEl = (SPU->commands)[SPU->ip];
+
+        containedEl *= SCALING_FACTOR;
+
         if ((mode & 2) == 0) argument = &containedEl;
     }
 

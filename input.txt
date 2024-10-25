@@ -1,26 +1,18 @@
 push 5
-call :frac
+sqrt
+look
+
+end 
+
+jmp :testjmp
+^testjmp2
 look
 end
 
-
-^frac
+^testjmp
+push 2
 pop AX
+push 1
 push AX
-push 1
-
-jmpe :one_end
-
-push AX 
-push AX
-push 1
-sub
-call :frac
-
-mul
-ret
-
-^one_end
-push 1
-ret
-
+look look
+jmp :testjmp2

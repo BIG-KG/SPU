@@ -24,7 +24,8 @@
             stack_dump(*doChaeck, 1);                                       \                                                                            \
         }                                                                   \
                                                                             \
-        stack_dtor(doChaeck);                                               \
+        Stack_error_global = CHECKED_ERROR;                                 \
+        stack_dtor(doChaeck, 1);                                            \
     }                                                                       \
                                                                                                                                                \
 
@@ -39,11 +40,9 @@ enum error_codes{
     STACK_UNDERFLOW  = 1,
     CHECKED_ERROR    = -1,
     EXTAL_STACK_INTR = 6,
-    WRONG_MY_HASH    = 1000 - 7 - 7,
+    WRONG_MY_HASH       = 1000 - 7 - 7,
     OUT_MY_OF_MEMORY = 10,
-    BROKEN_INNER_STK = 1000 - 7,
-    REFER_NOEXST_STK = 1000 -7 -7 -7,
-    NOT_INITLISD_STK = 1000 - 28,
+    BROKEN_INNER_STK = 1000 - 7
 
 };
 
