@@ -1,18 +1,67 @@
-push 5
-sqrt
-look
-
-end 
-
-jmp :testjmp
-^testjmp2
-look
+push 1
+pop AX
+push -12
+pop BX
+push 30
+pop CX
+call :DISCRIM
+call :QUAD_ANS
 end
 
-^testjmp
-push 2
-pop AX
-push 1
+
+
+
+
+^DISCRIM
+push BX
 push AX
-look look
-jmp :testjmp2
+div
+pop BX
+
+push CX
+push AX
+div
+pop CX
+
+push 0
+pop AX
+
+push BX
+push BX
+mul
+
+push 4
+push CX
+mul
+
+sub
+sqrt
+pop DX
+
+ret
+
+
+^QUAD_ANS
+
+push 0
+push BX
+sub
+push DX
+add
+push 2
+div
+look
+
+push 0
+push BX
+sub
+push DX
+sub
+push 2
+div
+look
+
+
+ret
+ 
+

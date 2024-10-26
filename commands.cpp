@@ -27,7 +27,6 @@ DEF_CMD("push", PSH, 1,
   //  printf("222\n");
     argument = get_arg(&SPU);
     push (SPU.stc, *argument);
-    printf("end222\n");
 
 })
 

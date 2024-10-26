@@ -248,7 +248,7 @@ void compile_args(FILE *inputFile, FILE *outputFile, char returningMode)
     }
 
 
-    if      (  isdigit(command[current])  )
+    if      (   isdigit(command[current])   ||   ( command[current] == '-'  &&  isdigit(command[current + 1] ) )   )
     {
         if(  (typeOfMemory & 2) != 0  && command[current - 1] != '+')
         {
@@ -265,6 +265,7 @@ void compile_args(FILE *inputFile, FILE *outputFile, char returningMode)
     if ( check_input_value(returningMode, typeOfMemory) != 0 )
     {
         return;
+        assert(0);
     }
 
     fprintf(outputFile, "%d", typeOfMemory);
@@ -280,6 +281,12 @@ int check_input_value(int returningMode, int typeOfMemory)
     if (returningMode == WRITE && (typeOfMemory & 1) != 0 && (typeOfMemory & 4) == 0)
     {
         printf("ERROR, TRYING TO WRIGHT IN CONST VALUE\n");
+        return 1;
+    }
+
+    if (typeOfMemory == 0)
+    {
+        printf("ERROR, NO INPUT VALUE\n");
         return 1;
     }
 
