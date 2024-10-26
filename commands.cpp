@@ -8,7 +8,7 @@
 
 DEF_CMD("end", END, 0,
 {
-    printf("000\n");
+   // printf("000\n");
     SPU.ip = SPU.numOfCommands + 1;
     run = 0;  //easy break cycle, using while condition
 
@@ -16,7 +16,7 @@ DEF_CMD("end", END, 0,
 
 DEF_CMD("pop", POP, 1,
 {
-    printf("111\n");
+//    printf("111\n");
     argument = get_arg(&SPU);
     *argument = pop(SPU.stc);
 
@@ -24,7 +24,7 @@ DEF_CMD("pop", POP, 1,
 
 DEF_CMD("push", PSH, 1,
 {
-    printf("222\n");
+  //  printf("222\n");
     argument = get_arg(&SPU);
     push (SPU.stc, *argument);
     printf("end222\n");
@@ -33,19 +33,19 @@ DEF_CMD("push", PSH, 1,
 
 DEF_CMD("add", ADD, 0,
 {
-    printf("333\n");
+    //printf("333\n");
     push (SPU.stc, pop (SPU.stc) + pop (SPU.stc));
 })
 
 DEF_CMD("mul", MUL, 0,
 {
-    printf("444\n");
+//    printf("444\n");
     push (SPU.stc, (pop (SPU.stc) * pop (SPU.stc)) / SCALING_FACTOR);
 })
 
 DEF_CMD("sub", SUB, 0,
 {
-    printf("555\n");
+  //  printf("555\n");
     a = pop (SPU.stc);
     b = pop (SPU.stc);
     push (SPU.stc, b - a);
@@ -53,13 +53,13 @@ DEF_CMD("sub", SUB, 0,
 
 DEF_CMD("look", LUK, 0,
 {
-    printf("666\n");
-    printf ("\nreturn = %d\n", pop (SPU.stc));
+    //printf("666\n");
+    printf ("\nreturn = %f\n", ((float)pop(SPU.stc) / SCALING_FACTOR));
 })
 
 DEF_CMD("div",  DIV, 0,
 {
-    printf("777\n");
+//    printf("777\n");
     a = pop (SPU.stc);
     b = pop (SPU.stc);
     push (SPU.stc, (b / a) * SCALING_FACTOR);
@@ -87,22 +87,22 @@ DEF_CMD("jmpl", JMPL, 2,
 
 DEF_CMD("jmpe", JMPE, 2,
 {
-    printf("com = 11\n");
     a = pop (SPU.stc);
     b = pop (SPU.stc);
-    if (a < b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    //sprintf("com = 11          a = %d b = %d\n", a, b);
+    if (a == b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
 })
 
 DEF_CMD("call", CALL, 2,
 {
-    printf("com = 12\n");
+    //printf("com = 12\n");
     push(SPU.returns, SPU.ip + 1);
     SPU.ip = SPU.commands[SPU.ip + 1] - 1;
 })
 
 DEF_CMD("ret", RETURN, 0,
 {
-    printf("com = 13\n");
+//    printf("com = 13\n");
     SPU.ip = pop(SPU.returns);
 })
 

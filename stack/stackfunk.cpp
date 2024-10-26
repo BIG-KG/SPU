@@ -296,19 +296,19 @@ int stack_dtor(int64_t name)
 
     if (name != allStack.lastNumOFStack - 1)
     {
-        printf("000\n");
+        //printf("000\n");
         (allStack.holes)[allStack.numOFholse] = name;
         allStack.numOFholse ++;
-        printf("001\n");
+        //printf("001\n");
     }
 
     else
     {
-        printf("111\n");
+        //printf("111\n");
         int i = 0;
         while(i < name)
         {
-            printf("222\n");
+            //printf("222\n");
             if (  (allStack.stacksArray)[name - i].inittialisated == 1  )
             {
                 break;
@@ -328,21 +328,21 @@ int stack_dtor(int64_t name)
 
         }
     }
-    printf("002\n");
-    printf("currsize = %d",     ((allStack.stacksArray)[name]).currSize );
+    //printf("002\n");
+    //printf("currsize = %d",     ((allStack.stacksArray)[name]).currSize );
     ((allStack.stacksArray)[name]).currSize   = 0;
-    printf("maxsize = %d",     ((allStack.stacksArray)[name]).maxSize );
+    //printf("maxsize = %d",     ((allStack.stacksArray)[name]).maxSize );
     ((allStack.stacksArray)[name]).maxSize    = 0;
     ((allStack.stacksArray)[name]).endCamry   = 0;
     ((allStack.stacksArray)[name]).strCanry = 0;
-    printf("003\n");
+    //printf("003\n");
     free (  (char*)((allStack.stacksArray)[name]).dataPtr - 8  );
-    printf("004\n");
+    //printf("004\n");
     if( dexpend_all_stacks(1) != 0)
     {
         return -1;
     }
-    printf("005\n");
+    //printf("005\n");
     return 0;
 }
 
