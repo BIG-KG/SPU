@@ -64,8 +64,10 @@ void main_runner(int commandsFile)
         #undef  DEF_CMD
         SPU.ip++;
     }
-
+    printf("cycle_out\n");
     stack_dtor(SPU.stc);
+    stack_dtor(SPU.returns);
+    printf("stacks_dtr\n");
 }
 
 int main(int argc, char *argv[])
@@ -77,6 +79,7 @@ int main(int argc, char *argv[])
     //int num = file_to_array(&commandsArray, commandsFile);
     main_runner (commandsFile);
 
+    printf("end_main_runner\n");
     close(commandsFile);
 
     return 0;

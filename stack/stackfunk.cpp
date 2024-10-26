@@ -76,6 +76,7 @@ int stack_ok (int64_t name)
     }
 
     return 0;
+
 }
 
 int stack_dump(int64_t name)
@@ -88,7 +89,7 @@ int stack_dump(int64_t name)
         return NULL_STACK_PTR;
     }
 
-    //printf("currSize = %d, maxsize = %d\n ", ptrTargetStack->currSize, ptrTargetStack->maxSize);
+    printf("currSize = %d, maxsize = %d\n ", ptrTargetStack->currSize, ptrTargetStack->maxSize);
 
     if (Stack_error_global == NULL_DATA_PTR || ptrTargetStack->dataPtr == NULL)
     {
@@ -99,7 +100,7 @@ int stack_dump(int64_t name)
 
     for (int i = 0; i < ptrTargetStack->currSize; i++)
     {
-        printf ("\n%lld", look(name, i));
+        printf ("\n%d", look(name, i));
     }
     printf ("\n");
 
@@ -173,11 +174,11 @@ int64_t stack_ctor (void)
 
     if(allStack.numOFholse == 0)
     {
-        //printf("lastnum = %lld", allStack.lastNumOFStack);
+        printf("lastnum = %d", allStack.lastNumOFStack);
         ptrTargetStack = &allStack.stacksArray[allStack.lastNumOFStack];
         name = allStack.lastNumOFStack;
         allStack.lastNumOFStack ++;
-        //printf("@1\n");
+        printf("@1\n");
     }
 
     else
@@ -223,7 +224,7 @@ int64_t stack_ctor (void)
     return name;
 }
 
-stackEl pop (stackEl name)
+int pop (int64_t name)
 {
 
     IF_ERR_GO_OUT(name);
@@ -236,7 +237,7 @@ stackEl pop (stackEl name)
         return STACK_UNDERFLOW;
     }
 
-    stackEl returningEl = *((stackEl*)(ptrTargetStack->dataPtr) + (ptrTargetStack->currSize-1));
+    int returningEl = *((int*)(ptrTargetStack->dataPtr) + (ptrTargetStack->currSize-1));
 
     Stack_error_global = stack_size_chk (name, -1);
     if (Stack_error_global != 0)
@@ -253,7 +254,7 @@ stackEl pop (stackEl name)
     return returningEl;
 }
 
-int64_t push(int64_t name, stackEl pushingEl)
+int push(int64_t name, int pushingEl)
 {
 
     IF_ERR_GO_OUT(name);
@@ -268,7 +269,7 @@ int64_t push(int64_t name, stackEl pushingEl)
     }
 
     ptrTargetStack->currSize++;
-    *((stackEl*)(ptrTargetStack->dataPtr) + (ptrTargetStack->currSize - 1)) = pushingEl;
+    *((int*)(ptrTargetStack->dataPtr) + (ptrTargetStack->currSize - 1)) = pushingEl;
 
     hasher (name, CHANGE_HASH);
     IF_ERR_GO_OUT(name);
@@ -277,7 +278,7 @@ int64_t push(int64_t name, stackEl pushingEl)
 
 }
 
-stackEl look(int64_t name, int ElNum){   // add stack to all names
+int look(int64_t name, int ElNum){   // add stack to all names
 
     IF_ERR_GO_OUT(name);
 
@@ -285,7 +286,7 @@ stackEl look(int64_t name, int ElNum){   // add stack to all names
 
     IF_ERR_GO_OUT(name);
 
-    return *((stackEl*)(ptrTtargetStack->dataPtr) + (ElNum));
+    return *((int*)(ptrTtargetStack->dataPtr) + (ElNum));
 
 }
 
@@ -295,19 +296,24 @@ int stack_dtor(int64_t name)
 
     if (name != allStack.lastNumOFStack - 1)
     {
+        printf("000\n");
         (allStack.holes)[allStack.numOFholse] = name;
         allStack.numOFholse ++;
+        printf("001\n");
     }
 
     else
     {
+        printf("111\n");
         int i = 0;
         while(i < name)
         {
+            printf("222\n");
             if (  (allStack.stacksArray)[name - i].inittialisated == 1  )
             {
                 break;
             }
+            i++;
         }
 
         allStack.lastNumOFStack = name - i + 1;
@@ -322,27 +328,30 @@ int stack_dtor(int64_t name)
 
         }
     }
-
+    printf("002\n");
+    printf("currsize = %d",     ((allStack.stacksArray)[name]).currSize );
     ((allStack.stacksArray)[name]).currSize   = 0;
+    printf("maxsize = %d",     ((allStack.stacksArray)[name]).maxSize );
     ((allStack.stacksArray)[name]).maxSize    = 0;
     ((allStack.stacksArray)[name]).endCamry   = 0;
     ((allStack.stacksArray)[name]).strCanry = 0;
-    free (  ((allStack.stacksArray)[name]).dataPtr  );
-
+    printf("003\n");
+    free (  (char*)((allStack.stacksArray)[name]).dataPtr - 8  );
+    printf("004\n");
     if( dexpend_all_stacks(1) != 0)
     {
         return -1;
     }
-
+    printf("005\n");
     return 0;
 }
 
 static int hasher(int64_t name, int changeHash)
 {
     // perepisat
-    stackEl *targetData       = (stackEl *)((allStack.stacksArray)[name]).dataPtr ;
+    int *targetData       = (int *)((allStack.stacksArray)[name]).dataPtr ;
     int num_ofElements        = ((allStack.stacksArray)[name]).currSize;
-    int64_t tmpHash           = 0;
+    int32_t tmpHash           = 0;
 
     for (int i = 0; i < num_ofElements; i ++)
     {

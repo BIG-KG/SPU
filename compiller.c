@@ -59,12 +59,14 @@ int main(int argc, char *argv[])
 
         else if (strcmp (command, "div") == 0)
         {
+            printf("why you");
             fprintf (outputFile, "%d\n", DIV);
         }
 
 
         else if (strcmp (command, "look") == 0)
         {
+            printf("look_command");
             fprintf (outputFile, "%d\n", LUK);
         }
 

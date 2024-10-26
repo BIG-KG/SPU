@@ -17,12 +17,15 @@ int main()
     push(stk,  30);
     push(stk2, 40);
 
-    printf("name1 = %d, name2 = %d\n\n", stk, stk2);
+    printf("adcsczsdv = %d, name2 = %d\n\n", stk, stk2);
 
     printf("%d\n", pop(stk));
     printf("%d\n", pop(stk));
     printf("%d\n", pop(stk2));
     printf("%d\n", pop(stk2));
+    printf("3'rlemdsklvnm fsncxm xk;zl.\n");
 
+    stack_dtor(stk2);
+    stack_dtor(stk);
     return 0;
 }

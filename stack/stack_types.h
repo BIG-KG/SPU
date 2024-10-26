@@ -9,7 +9,7 @@
 
 
 
-typedef int64_t stackEl;
+typedef int stackEl;
 
 const int START_STACK_SIZE = 10;
 const int SIZE_STEP_UP     = 2;
@@ -24,7 +24,7 @@ struct stack_t{
     void *dataPtr      = NULL;
     int currSize       = 0;
     int maxSize        = 0;
-    int64_t Hash       = 0;
+    int Hash           = 0;
     int64_t endCamry   = 0;// NE BAG A FICHA
 
 };

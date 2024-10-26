@@ -16,16 +16,14 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "stack_types.h"
-
 
 static int hasher(int64_t name, int changeHash);
 
-int64_t look(int64_t name, int ElNum);
+int look(int64_t name, int ElNum);
 
-int64_t push(int64_t name, stackEl pushingEl);
+int push(int64_t name, int pushingEl);
 
-int64_t pop(int64_t name);
+int pop(int64_t name);
 
 int64_t stack_ctor(void);
 
