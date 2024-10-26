@@ -1,3 +1,4 @@
+
 #include "C:\MIPT\SPU\stack\stack_funk.h"
 #include "C:\MIPT\SPU\stack\errors.h"
 #include "C:\MIPT\SPU\stack\const.h"
@@ -8,11 +9,11 @@
 
 #include "enums.cpp"
 
-#define FLOATIG_NUMS
 
 const int SCALING_FACTOR = 1000;
 
 int file_to_array(int **commandsArray, int file);
+
 
 struct SPU_type{
     int64_t stc       = 0;
@@ -42,110 +43,29 @@ void main_runner(int commandsFile)
 
     printf("\n\n\n");
     int *argument = NULL;
+    int run = 1;
 
-    while(SPU.ip < SPU.numOfCommands){
+    while(SPU.ip < SPU.numOfCommands && run == 1){
+
+    #define DEF_CMD(name, CODE, argType, codet)     \
+        case (CODE):                                \
+            codet                                   \
+            break;                                  \
+                                                    \
+                                                    \
 
         switch (SPU.commands[SPU.ip])
         {
-            case END:
-                SPU.ip = SPU.numOfCommands + 1;  //easy break cycle, using while condition
-                break;
-
-            case PSH:
-                argument = get_arg(&SPU);
-                push (SPU.stc, *argument);
-                break;
-
-            case ADD:
-                push (SPU.stc, pop (SPU.stc) + pop (SPU.stc));
-                break;
-
-            case MUL:
-                push (SPU.stc, pop (SPU.stc) * pop (SPU.stc) / SCALING_FACTOR);
-                break;
-
-            case SUB:
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                push (SPU.stc, b - a);
-                break;
-
-            case DIV:
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                push (SPU.stc, b / a * SCALING_FACTOR);
-                //printf("div = %d\n", b / a);
-                break;
-
-            case POP:
-                argument = get_arg(&SPU);
-                *argument = pop(SPU.stc);
-                break;
-
-            case LUK:
-                printf("rppc\n");
-
-                #ifndef FLOATIG_NUMS
-                printf ("\n\nreturn = %d\n", pop (SPU.stc));
-                #else
-                printf ("\n\nreturn = %f\n", (float)pop (SPU.stc) / SCALING_FACTOR);
-                #endif // FLOATIG_NUMS
-
-                break;
-
-            case JMP:
-                SPU.ip = SPU.commands[SPU.ip + 1] - 1;
-                //printf("     new SPU.ip = %d     ", SPU.ip);
-                break;
-
-            case JMPM:
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                if (a > b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
-                break;
-
-            case JMPL:
-                printf("111\n");
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                printf("222\n");
-                if (a < b)  SPU.ip = SPU.commands[SPU.ip + 1] - 1;
-                break;
-
-            case JMPE:
-                printf("555\n");
-                a = pop (SPU.stc);
-                b = pop (SPU.stc);
-                printf("666\n");
-                if (a == b)
-                {
-                    SPU.ip = SPU.commands[SPU.ip + 1] - 1;
-                }
-                break;
-
-            case CALL:
-                push(SPU.returns, SPU.ip + 1);
-                SPU.ip = SPU.commands[SPU.ip + 1] - 1;
-                break;
-
-            case RETURN:
-                SPU.ip = pop(SPU.returns);
-                break;
-
-            case SQRT:
-                push(SPU.stc, sqrt (pop(SPU.stc)) * sqrt (SCALING_FACTOR) );
-                break;
+            #include "commands.cpp"
 
             default:
                 printf ("\nSyntax error -%d-         ip = %d\n", SPU.commands[SPU.ip], SPU.ip);
         }
-
+        #undef  DEF_CMD
         SPU.ip++;
     }
 
     stack_dtor(SPU.stc);
-
-
 }
 
 int main(int argc, char *argv[])
