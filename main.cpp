@@ -134,6 +134,7 @@ int *get_arg(command_t* command, SPU_type* SPU)
         argument = &(SPU->registers)[command->registerNum];
     }
 
+
     if (  (mode & 1) != 0)
     {
         containedEl  = command->constValue;
@@ -147,6 +148,7 @@ int *get_arg(command_t* command, SPU_type* SPU)
         containedEl += *argument;
         argument     = &containedEl;
     }
+
 
     if( (mode & 4)  != 0)
     {
