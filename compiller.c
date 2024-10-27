@@ -1,3 +1,4 @@
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +8,7 @@
 
 #include "enums.cpp"
 #include "compiller_func.h"
-
+#include "cmpiller_types.h"
 
 enum returnings_types{
     REED  = 0,
@@ -17,131 +18,153 @@ enum returnings_types{
 
 struct command
 {
-    memoryType  : 3;
-    registerNum : 3;
-    constValue  : 18;
-    command     : 8;
+    int commandNUM  : 8;
+    int memoryType  : 3;
+    int registerNum : 3;
+    int constValue  : 18;
 };
 
 
 int main(int argc, char *argv[])
 {
-	FILE *inputFile   = fopen (argv[1] ,         "r");
-	FILE *outputFile  = fopen ("compilled.txt" , "w");
-	char command[30]  = "";
-	tag tagsArray[30] = {0};
+	FILE *inputFile     = fopen (argv[1] ,         "r");
+	FILE *outputFile    = fopen ("compilled.txt" , "w");
+	char command[30]    = "";
+	tag tagsArray[30]   = {0};
+
+    int commentary_mode = 0;
 	int a = 0;
 	int b = 0;
 
 	find_tags(inputFile, tagsArray);
 
-    while(  fscanf (inputFile, "%s", &command) != EOF  )
+    struct output_commands outputArray;
+
+    while (  fscanf (inputFile, "%s", &command) != EOF  )
     {
         printf("%s\n", command);
+
+        if (commentary_mode == 1)
+        {
+            if (  command [strlen(command) - 1] == '#'  )
+            {
+                commentary_mode = 0;
+                continue;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
 
 
         if      (strcmp (command, "push") == 0)
         {
-            fprintf (outputFile, "%d ", PSH);
-            compile_args(inputFile, outputFile, REED);
+            compile_args(inputFile, REED, &outputArray, PSH);
 
         }
 
-
         else if (strcmp (command, "add") == 0)
         {
-			fprintf (outputFile, "%d\n", ADD);
+            outputArray.commands[outputArray.currentCommand] = ADD;
         }
 
 
         else if (strcmp (command, "mul") == 0)
         {
-            fprintf (outputFile, "%d\n", MUL);
+            outputArray.commands[outputArray.currentCommand] = MUL;
         }
 
 
         else if (strcmp (command, "sub") == 0)
         {
-            fprintf (outputFile, "%d\n", SUB);
+            outputArray.commands[outputArray.currentCommand] = SUB;
         }
 
 
         else if (strcmp (command, "div") == 0)
         {
-            printf("why you");
-            fprintf (outputFile, "%d\n", DIV);
+            outputArray.commands[outputArray.currentCommand] = DIV;
         }
 
 
         else if (strcmp (command, "look") == 0)
         {
-            printf("look_command");
-            fprintf (outputFile, "%d\n", LUK);
+            outputArray.commands[outputArray.currentCommand] = LUK;
         }
 
 
         else if (strcmp (command, "pop") == 0)
         {
-            fprintf (outputFile, "%d ", POP);
-            compile_args(inputFile, outputFile, WRITE);
+            compile_args(inputFile, WRITE, &outputArray, POP);
         }
 
 
         else if (strcmp (command, "end") == 0)
         {
-            fprintf (outputFile, "%d\n", END);
+            outputArray.commands[outputArray.currentCommand] = END;
         }
 
 
         else if (strcmp (command, "jmp") == 0)
         {
-            jump_argument(tagsArray, inputFile, outputFile, JMP);
+            jump_argument(tagsArray, inputFile, &outputArray, JMP);
         }
 
 
         else if (strcmp (command, "jmpm")   == 0)
         {
-            jump_argument(tagsArray, inputFile, outputFile, JMPM);
+            jump_argument(tagsArray, inputFile, &outputArray, JMPM);
         }
 
 
         else if (strcmp (command, "jmpl")   == 0)
         {
-            jump_argument(tagsArray, inputFile, outputFile, JMPL);
+            jump_argument(tagsArray, inputFile, &outputArray, JMPL);
         }
 
 
         else if (strcmp (command, "jmpe")   == 0)
         {
-            jump_argument(tagsArray, inputFile, outputFile, JMPE);
+            jump_argument(tagsArray, inputFile, &outputArray, JMPE);
         }
 
         else if (strcmp (command, "call") == 0)
         {
-            jump_argument(tagsArray, inputFile, outputFile, CALL);
+            jump_argument(tagsArray, inputFile, &outputArray, CALL);
         }
 
 
         else if (strcmp (command, "ret") == 0)
         {
-			fprintf (outputFile, "%d\n",  RETURN);
+			outputArray.commands[outputArray.currentCommand] = RETURN;
         }
 
         else if (strcmp (command, "sqrt") == 0)
         {
-            fprintf (outputFile, "%d\n", SQRT);
+            outputArray.commands[outputArray.currentCommand] = SQRT;
         }
 
-        else if ( command[0] == '^') ;
+        else if ( command[0] == '^')
+        {
+            continue;
+        }
+
+        else if ( command[0] == '#'){
+            commentary_mode = 1;
+        }
 
         else
         {
             printf ("Syntax error _%s_\n", command);
-            printf("firs sim ~%c~\n", command[0]);
-			return 1;
+			assert(0);
         }
 
+       outputArray.currentCommand ++;
     }
+
+    outputCommandFile(outputFile, &outputArray);
 
     printf("end\n");
 
@@ -182,18 +205,6 @@ int find_tags(FILE *inputFile, tag *tagsArray){
         else{
             ip++;
         }
-
-        if ( lastEl == ']' || lastEl == 'X' || isdigit(lastEl) )
-        {
-            ip ++;
-
-            printf("argument\n");
-
-            for (int i = 0; i < commandlen; i ++)
-            {
-                if(command[i] == '+') ip ++;
-            }
-        }
     }
 
     fseek(inputFile, 0, SEEK_SET);
@@ -210,7 +221,7 @@ int get_tag(char* a, tag *tagsArray){
     return -1;
 }
 
-void compile_args(FILE *inputFile, FILE *outputFile, char returningMode)
+void compile_args(FILE *inputFile, char returningMode, struct output_commands *outputArray, int commandNUM )
 {
     int typeOfMemory  = 0;
     int returningReg  = 0;
@@ -277,10 +288,20 @@ void compile_args(FILE *inputFile, FILE *outputFile, char returningMode)
         assert(0);
     }
 
-    fprintf(outputFile, "%d", typeOfMemory);
-    if ((typeOfMemory & 2) != 0) fprintf(outputFile, " %d", returningReg   );
-    if ((typeOfMemory & 1) != 0) fprintf(outputFile, " %d", returningConst);
-    fprintf(outputFile, "\n");
+    struct command tmprCmd = {};
+    tmprCmd.commandNUM  = commandNUM;
+    tmprCmd.constValue  = returningConst;
+    tmprCmd.registerNum = returningReg;
+    tmprCmd.memoryType  = typeOfMemory;
+
+    outputArray->commands[outputArray->currentCommand] = *((int*)&tmprCmd);
+
+    // printf("%d", typeOfMemory);
+    // if ((typeOfMemory & 2) != 0) printf(" %d", returningReg   );
+    // if ((typeOfMemory & 1) != 0) printf(" %d", returningConst);
+    // fprintf("\n");
+
+    return;
 }
 
 int check_input_value(int returningMode, int typeOfMemory)
@@ -301,7 +322,7 @@ int check_input_value(int returningMode, int typeOfMemory)
     return 0;
 }
 
-int jump_argument(tag *tagsArray, FILE *inputFile, FILE *outputFile, int jumpType)
+int jump_argument(tag *tagsArray, FILE *inputFile, struct output_commands *outputArray, int jumpType)
     {
         int a = 0;
         char command[30] = {};
@@ -309,6 +330,7 @@ int jump_argument(tag *tagsArray, FILE *inputFile, FILE *outputFile, int jumpTyp
         if (  fscanf (inputFile, "%d", &a) == 0  )
         {
             fscanf(inputFile, "%s", command);
+
 
             if(  (command[0] != ':') || (command[1]) == '\0' )
             {
@@ -323,7 +345,21 @@ int jump_argument(tag *tagsArray, FILE *inputFile, FILE *outputFile, int jumpTyp
             }
         }
 
-        fprintf (outputFile, "%d %d\n", jumpType, a);
+        struct command tmprCmd = {};
+        tmprCmd.commandNUM = jumpType;
+        tmprCmd.constValue = a;
+
+        outputArray->commands[outputArray->currentCommand] = *((int*)&tmprCmd);
 
         return 0;
     }
+
+void outputCommandFile(FILE *outputFile ,struct output_commands *outputArray)
+{
+    printf("cuur comm = %d\n", outputArray->currentCommand);
+    for(int i = 0; i < outputArray->currentCommand; i++)
+    {
+        printf("%d = %d\n", i, (int)(outputArray->commands[i]));
+        fprintf(outputFile, "%d\n", (int)(outputArray->commands[i]));
+    }
+}

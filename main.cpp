@@ -25,6 +25,23 @@ struct SPU_type{
     int RAM[100]      = {};
 };
 
+struct command_bits
+{
+    int commandNum  : 8;
+    int memoryType  : 3;
+    int registerNum : 3;
+    int constValue  : 18;
+};
+
+struct command_t{
+    int commandNum  = 0;
+    int memoryType  = 0;
+    int registerNum = 0;
+    int constValue  = 0;
+};
+
+
+
 int *get_arg(SPU_type* SPU);
 
 void main_runner(int commandsFile)
@@ -47,6 +64,8 @@ void main_runner(int commandsFile)
 
     while(SPU.ip < SPU.numOfCommands && run == 1){
 
+    if(SPU.commands[SPU.ip] > 511)  debites(SPU.commands[SPU.ip], &command);
+
     #define DEF_CMD(name, CODE, argType, codet)     \
         case (CODE):                                \
             codet                                   \
@@ -54,12 +73,12 @@ void main_runner(int commandsFile)
                                                     \
                                                     \
 
-        switch (SPU.commands[SPU.ip])
+        switch (command.commandNum)
         {
             #include "commands.cpp"
 
             default:
-                printf ("\nSyntax error -%d-         ip = %d\n", SPU.commands[SPU.ip], SPU.ip);
+                printf ("\nSyntax error -%d-         ip = %d\n", command.commandNum, SPU.ip);
         }
         #undef  DEF_CMD
         SPU.ip++;
@@ -104,24 +123,20 @@ int file_to_array(int **commandsArray, int inputFile)
     return numStrings;
 }
 
-int *get_arg(SPU_type* SPU)
+int *get_arg(command_t* command, SPU_type* SPU)
 {
-    SPU->ip ++;
-    int mode      = (SPU->commands)[SPU->ip];
+    int mode      = command->memoryType;
     int *argument = NULL;
     static int containedEl = 0;
 
     if (  (mode & 2) != 0)
     {
-        SPU->ip ++;
-        argument = &(SPU->registers)[(SPU->commands)[SPU->ip]];
+        argument = &(SPU->registers)[command->registerNum];
     }
 
     if (  (mode & 1) != 0)
     {
-        SPU->ip++;
-        containedEl = (SPU->commands)[SPU->ip];
-
+        containedEl  = command->constValue;
         containedEl *= SCALING_FACTOR;
 
         if ((mode & 2) == 0) argument = &containedEl;
@@ -130,15 +145,13 @@ int *get_arg(SPU_type* SPU)
     if (  (mode & 1) != 0 && (mode & 2) != 0  )
     {
         containedEl += *argument;
-        argument = &containedEl;
+        argument     = &containedEl;
     }
-
 
     if( (mode & 4)  != 0)
     {
         argument = &(SPU->RAM)[*argument];
     }
-    printf("\n\n");
 
     return argument;
 }
