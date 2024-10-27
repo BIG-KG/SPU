@@ -1,67 +1,81 @@
 push 1
 pop AX
-push -12
+push -4
 pop BX
-push 30
+push 4
 pop CX
-call :DISCRIM
-call :QUAD_ANS
+
+call :full_Square_sol
+
 end
 
+
+^full_Square_sol
+    call :DISCRIM
+    call :QUAD_ANS
+    ret
 
 
 
 
 ^DISCRIM
-push BX
-push AX
-div
-pop BX
+    push BX
+    push AX
+    div
+    pop BX
 
-push CX
-push AX
-div
-pop CX
+    push CX
+    push AX
+    div
+    pop CX
 
-push 0
-pop AX
+    push 0
+    pop AX
 
-push BX
-push BX
-mul
+    push BX
+    push BX
+    mul
 
-push 4
-push CX
-mul
+    push 4
+    push CX
+    mul
 
-sub
-sqrt
-pop DX
+    sub
+    sqrt
+    pop DX
 
-ret
+    ret
+
+
+
 
 
 ^QUAD_ANS
 
-push 0
-push BX
-sub
-push DX
-add
-push 2
-div
-look
+    push 0
+    push BX
+    sub
+    push DX
+    add
+    push 2
+    div
+    look
 
-push 0
-push BX
-sub
-push DX
-sub
-push 2
-div
-look
+    push DX
+    push 0
+    jmpe :END
 
+    push 0
+    push BX
+    sub
+    push DX
+    sub
+    push 2
+    div
+    look
+    end
 
-ret
- 
+^END
+    end
+
 

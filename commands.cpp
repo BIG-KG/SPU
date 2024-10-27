@@ -61,7 +61,7 @@ DEF_CMD("div",  DIV, 0,
 //    printf("777\n");
     a = pop (SPU.stc);
     b = pop (SPU.stc);
-    push (SPU.stc, (b / a) * SCALING_FACTOR);
+    push (SPU.stc, ((float)b / (float)a) * SCALING_FACTOR);
     //printf("div = %d\n", b / a);
 })
 
@@ -75,6 +75,7 @@ DEF_CMD("jmpm", JMPM, 2,
     a = pop (SPU.stc);
     b = pop (SPU.stc);
     if (a > b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    else SPU.ip++;
 })
 
 DEF_CMD("jmpl", JMPL, 2,
@@ -82,6 +83,7 @@ DEF_CMD("jmpl", JMPL, 2,
     a = pop (SPU.stc);
     b = pop (SPU.stc);
     if (a < b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    else SPU.ip++;
 })
 
 DEF_CMD("jmpe", JMPE, 2,
@@ -90,6 +92,7 @@ DEF_CMD("jmpe", JMPE, 2,
     b = pop (SPU.stc);
     //sprintf("com = 11          a = %d b = %d\n", a, b);
     if (a == b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    else SPU.ip++;
 })
 
 DEF_CMD("call", CALL, 2,
