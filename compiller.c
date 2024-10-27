@@ -15,6 +15,15 @@ enum returnings_types{
 };
 
 
+struct command
+{
+    memoryType  : 3;
+    registerNum : 3;
+    constValue  : 18;
+    command     : 8;
+};
+
+
 int main(int argc, char *argv[])
 {
 	FILE *inputFile   = fopen (argv[1] ,         "r");
@@ -273,7 +282,6 @@ void compile_args(FILE *inputFile, FILE *outputFile, char returningMode)
     if ((typeOfMemory & 1) != 0) fprintf(outputFile, " %d", returningConst);
     fprintf(outputFile, "\n");
 }
-
 
 int check_input_value(int returningMode, int typeOfMemory)
 {
