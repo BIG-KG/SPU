@@ -1,14 +1,9 @@
 push 5
 pop AX
-
-^test_jmp
-push 1
-look
 push AX
-push 1
-sub
+look
+
+push 4
 pop AX
 push AX
-push 0
-jmpl :test_jmp
-end
+look

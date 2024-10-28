@@ -10,7 +10,7 @@
 #include "enums.cpp"
 
 
-const int SCALING_FACTOR = 1000;
+const int SCALING_FACTOR = 100;
 
 int file_to_array(int **commandsArray, int file);
 
@@ -27,10 +27,10 @@ struct SPU_type{
 
 struct command_bits
 {
-    int commandNUM  : 8;
-    int memoryType  : 3;
-    int registerNum : 3;
-    int constValue  : 50;
+    int     commandNum  : 5;
+    int     memoryType  : 3;
+    int     registerNum : 3;
+    int     constValue  : 20;
 };
 
 
@@ -131,7 +131,6 @@ int *get_arg(command_bits* command, SPU_type* SPU)
     if (  (mode & 1) != 0)
     {
         containedEl  = command->constValue;
-        containedEl *= SCALING_FACTOR;
 
         if ((mode & 2) == 0) argument = &containedEl;
     }

@@ -1,22 +1,45 @@
-push 1
+push 0
 pop AX
-push -4
+push 0
 pop BX
-push 4
+push 2
 pop CX
 
-call :full_Square_sol
+push AX
+push 0
+jmpe :linear
+
+jmp  :full_Square_sol
 
 end
 
+^linear
+	push 14
+	look
+    push BX
+    push 0
+    jmpe :NO_ANS
+
+    push CX
+    push 0
+    jmpe :INF_ANS
+
+    push 0
+    push CX
+    sub
+    push BX
+    div
+    look
+    end
+
+
 
 ^full_Square_sol
+	push 88
+	look
     call :DISCRIM
     call :QUAD_ANS
     ret
-
-
-
 
 ^DISCRIM
     push BX
@@ -39,15 +62,20 @@ end
     push 4
     push CX
     mul
-
     sub
+    pop DX
+    push DX
+    look
+
+    push DX
+    push 0
+    jmpm :NO_ANS
+
+    push DX
     sqrt
     pop DX
 
     ret
-
-
-
 
 
 ^QUAD_ANS
@@ -78,4 +106,12 @@ end
 ^END
     end
 
+^NO_ANS
+    push 563
+    look
+    end
 
+^INF_ANS
+    push 365
+    look
+    end

@@ -17,19 +17,17 @@ enum returnings_types{
     WRITE = 1
 };
 
-typedef long long int int64_t;
-
 struct command
 {
-    int     commandNUM  : 8;
+    int     commandNUM  : 5;
     int     memoryType  : 3;
     int     registerNum : 3;
-    int64_t constValue  : 50;
+    int     constValue  : 20;
 };
 
 
 int main(int argc, char *argv[])
-{
+{`
 	FILE *inputFile     = fopen (argv[1] ,         "r");
 	FILE *outputFile    = fopen ("compilled.txt" , "w");
 	char command[30]    = "";
@@ -354,9 +352,15 @@ int jump_argument(tag *tagsArray, FILE *inputFile, struct output_commands *outpu
         tmprCmd.memoryType     = 1;
         tmprCmd.constValue     = a * SCALING_FACTOR;
 
-        printf("cons value  =                aodicadc = %lld\n", tmprCmd.constValue, *((int64_t*)&tmprCmd));
+    //_______________________________________________________________________________
 
-        outputArray->commands[outputArray->currentCommand] = *((int64_t*)&tmprCmd);
+    //_______________________________________________________________________________
+
+        printf("cons value  =  %d              aodicadc = %d\n", tmprCmd.constValue, *((int*)&tmprCmd));
+
+        printf("value = %d\n", *(int *)&tmprCmd);
+
+        outputArray->commands[outputArray->currentCommand] = *((int*)&tmprCmd);
 
         return 0;
     }

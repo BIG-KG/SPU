@@ -1,28 +1,27 @@
 push 5
+pop AX
+push AX
+
 call :frac
 look
 end
 
 
 ^frac
+
 pop AX
 push AX
 push 1
 jmpe :one_end
-
-push AX 
 push AX
-push 6969
-look 
+push AX
 push 1
 sub
+
 call :frac
 mul
-
 ret
 
 ^one_end
-push 8888
-look
 push 1
 ret
