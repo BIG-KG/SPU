@@ -1,4 +1,14 @@
-push 1
+push 5
+pop AX
+
 ^test_jmp
+push 1
 look
-jmp :test_jmp
+push AX
+push 1
+sub
+pop AX
+push AX
+push 0
+jmpl :test_jmp
+end

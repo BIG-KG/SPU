@@ -24,7 +24,6 @@ int main()
     printf("%d\n", pop(stk2));
     printf("%d\n", pop(stk2));
     printf("3'rlemdsklvnm fsncxm xk;zl.\n");
-
     stack_dtor(stk2);
     stack_dtor(stk);
     return 0;

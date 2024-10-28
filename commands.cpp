@@ -17,7 +17,7 @@ DEF_CMD("end", END, 0,
 DEF_CMD("pop", POP, 1,
 {
 //    printf("111\n");
-    argument = get_arg(&SPU);
+    argument = get_arg(command, &SPU);
     *argument = pop(SPU.stc);
 
 })
@@ -25,8 +25,8 @@ DEF_CMD("pop", POP, 1,
 DEF_CMD("push", PSH, 1,
 {
   //  printf("222\n");
-    argument = get_arg(&SPU);
-    push (SPU.stc, *argument);
+    argument = get_arg(command, &SPU);
+    push (SPU.stc, (*argument) );
 
 })
 
@@ -67,14 +67,14 @@ DEF_CMD("div",  DIV, 0,
 
 DEF_CMD("jmp",  JMP,  2,
 {
-    SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    SPU.ip             = (*get_arg(command, &SPU)) / SCALING_FACTOR  ;
 })
 
 DEF_CMD("jmpm", JMPM, 2,
 {
     a = pop (SPU.stc);
     b = pop (SPU.stc);
-    if (a > b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    if (a >  b) SPU.ip = (*get_arg(command, &SPU)) / SCALING_FACTOR  ;
     else SPU.ip++;
 })
 
@@ -82,7 +82,8 @@ DEF_CMD("jmpl", JMPL, 2,
 {
     a = pop (SPU.stc);
     b = pop (SPU.stc);
-    if (a < b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    //printf("a = %d")
+    if (a <  b) SPU.ip = (*get_arg(command, &SPU)) / SCALING_FACTOR  ;
     else SPU.ip++;
 })
 
@@ -91,7 +92,7 @@ DEF_CMD("jmpe", JMPE, 2,
     a = pop (SPU.stc);
     b = pop (SPU.stc);
     //sprintf("com = 11          a = %d b = %d\n", a, b);
-    if (a == b) SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    if (a == b) SPU.ip = (*get_arg(command, &SPU)) / SCALING_FACTOR  ;
     else SPU.ip++;
 })
 
@@ -99,7 +100,7 @@ DEF_CMD("call", CALL, 2,
 {
     //printf("com = 12\n");
     push(SPU.returns, SPU.ip + 1);
-    SPU.ip = SPU.commands[SPU.ip + 1] - 1;
+    SPU.ip             = (*get_arg(command, &SPU)) / SCALING_FACTOR  ;
 })
 
 DEF_CMD("ret", RETURN, 0,

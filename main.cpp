@@ -27,22 +27,14 @@ struct SPU_type{
 
 struct command_bits
 {
-    int commandNum  : 8;
+    int commandNUM  : 8;
     int memoryType  : 3;
     int registerNum : 3;
-    int constValue  : 18;
-};
-
-struct command_t{
-    int commandNum  = 0;
-    int memoryType  = 0;
-    int registerNum = 0;
-    int constValue  = 0;
+    int constValue  : 50;
 };
 
 
-
-int *get_arg(SPU_type* SPU);
+int *get_arg(command_bits* command, SPU_type* SPU);
 
 void main_runner(int commandsFile)
 {
@@ -54,31 +46,31 @@ void main_runner(int commandsFile)
 
     SPU.numOfCommands = file_to_array(&SPU.commands, commandsFile);
 
-    for(int i = 0; i < SPU.numOfCommands; i ++){
-        printf("%d   _%d_\n", i, SPU.commands[i]);
-    }
-
-    printf("\n\n\n");
-    int *argument = NULL;
-    int run = 1;
+    // for(int i = 0; i < SPU.numOfCommands; i ++){
+    //     printf("%d   _%d_\n", i, SPU.commands[i]);
+    // }
+    // printf("\n\n\n");
+    command_bits *command = NULL;
+    int *argument         = NULL;
+    int run               = 1;
 
     while(SPU.ip < SPU.numOfCommands && run == 1){
 
-    if(SPU.commands[SPU.ip] > 511)  debites(SPU.commands[SPU.ip], &command);
+    command = (command_bits *)(&SPU.commands[SPU.ip]);
 
-    #define DEF_CMD(name, CODE, argType, codet)     \
+    #define DEF_CMD(name, CODE, argType, codetxt)   \
         case (CODE):                                \
-            codet                                   \
+            codetxt                                 \
             break;                                  \
                                                     \
                                                     \
 
-        switch (command.commandNum)
+        switch (command->commandNum)
         {
             #include "commands.cpp"
 
             default:
-                printf ("\nSyntax error -%d-         ip = %d\n", command.commandNum, SPU.ip);
+                printf ("\nSyntax error -%d-         ip = %d\n", command->commandNum, SPU.ip);
         }
         #undef  DEF_CMD
         SPU.ip++;
@@ -114,16 +106,17 @@ int file_to_array(int **commandsArray, int inputFile)
     string_start_end *stringsArray = NULL;
     int numStrings                 = enter_text_struct(&stringsArray, inputFile, &allStr);
 
-    for(int i = 0; i < numStrings; i ++){
+    for (int i = 0; i < numStrings; i ++)
+    {
         commands[i] = atoi (  (stringsArray[i]).startl  );
     }
 
-    close(inputFile);
+    close  (inputFile);
 
     return numStrings;
 }
 
-int *get_arg(command_t* command, SPU_type* SPU)
+int *get_arg(command_bits* command, SPU_type* SPU)
 {
     int mode      = command->memoryType;
     int *argument = NULL;

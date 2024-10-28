@@ -10,18 +10,21 @@
 #include "compiller_func.h"
 #include "cmpiller_types.h"
 
+const int SCALING_FACTOR = 1000;
+
 enum returnings_types{
     REED  = 0,
     WRITE = 1
 };
 
+typedef long long int int64_t;
 
 struct command
 {
-    int commandNUM  : 8;
-    int memoryType  : 3;
-    int registerNum : 3;
-    int constValue  : 18;
+    int     commandNUM  : 8;
+    int     memoryType  : 3;
+    int     registerNum : 3;
+    int64_t constValue  : 50;
 };
 
 
@@ -174,8 +177,8 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-int find_tags(FILE *inputFile, tag *tagsArray){
-
+int find_tags(FILE *inputFile, tag *tagsArray)
+{
     char command[30] = {};
     int commandlen   = 0;
     char lastEl      = 0;
@@ -188,7 +191,7 @@ int find_tags(FILE *inputFile, tag *tagsArray){
         lastEl = command[commandlen - 1];
         printf("\n");
 
-        printf("current command data    string = _%s_    lastel = _%c_        curr ip = %d\n", command, lastEl, ip);
+        printf("current command data    string = _%s_    lastel = _%c_        curr ip = %lld\n", command, lastEl, ip);
 
         if (command[0] == '^')
         {
@@ -202,7 +205,8 @@ int find_tags(FILE *inputFile, tag *tagsArray){
             continue;
         }
 
-        else{
+        else if (!( lastEl == ']' || lastEl == 'X' || isdigit(lastEl) || command[0] == ':'))
+        {
             ip++;
         }
     }
@@ -217,7 +221,6 @@ int get_tag(char* a, tag *tagsArray){
         if (  strcmp((tagsArray[i]).name, a) == 0  )
             return (tagsArray[i]).contain;
     }
-
     return -1;
 }
 
@@ -255,6 +258,7 @@ void compile_args(FILE *inputFile, char returningMode, struct output_commands *o
         {
             printf("ERROR, REFERENSE TO UNEXISEBLE REGISTER\n");
             assert(0);
+
         }
 
         current += 3;
@@ -290,15 +294,15 @@ void compile_args(FILE *inputFile, char returningMode, struct output_commands *o
 
     struct command tmprCmd = {};
     tmprCmd.commandNUM  = commandNUM;
-    tmprCmd.constValue  = returningConst;
+    tmprCmd.constValue  = returningConst * SCALING_FACTOR;
     tmprCmd.registerNum = returningReg;
     tmprCmd.memoryType  = typeOfMemory;
 
-    outputArray->commands[outputArray->currentCommand] = *((int*)&tmprCmd);
+    outputArray->commands[outputArray->currentCommand] = *((int64_t*)&tmprCmd);
 
-    // printf("%d", typeOfMemory);
-    // if ((typeOfMemory & 2) != 0) printf(" %d", returningReg   );
-    // if ((typeOfMemory & 1) != 0) printf(" %d", returningConst);
+    // printf("%lld", typeOfMemory);
+    // if ((typeOfMemory & 2) != 0) printf(" %lld", returningReg   );
+    // if ((typeOfMemory & 1) != 0) printf(" %lld", returningConst);
     // fprintf("\n");
 
     return;
@@ -346,10 +350,13 @@ int jump_argument(tag *tagsArray, FILE *inputFile, struct output_commands *outpu
         }
 
         struct command tmprCmd = {};
-        tmprCmd.commandNUM = jumpType;
-        tmprCmd.constValue = a;
+        tmprCmd.commandNUM     = jumpType;
+        tmprCmd.memoryType     = 1;
+        tmprCmd.constValue     = a * SCALING_FACTOR;
 
-        outputArray->commands[outputArray->currentCommand] = *((int*)&tmprCmd);
+        printf("cons value  =                aodicadc = %lld\n", tmprCmd.constValue, *((int64_t*)&tmprCmd));
+
+        outputArray->commands[outputArray->currentCommand] = *((int64_t*)&tmprCmd);
 
         return 0;
     }
@@ -359,7 +366,7 @@ void outputCommandFile(FILE *outputFile ,struct output_commands *outputArray)
     printf("cuur comm = %d\n", outputArray->currentCommand);
     for(int i = 0; i < outputArray->currentCommand; i++)
     {
-        printf("%d = %d\n", i, (int)(outputArray->commands[i]));
-        fprintf(outputFile, "%d\n", (int)(outputArray->commands[i]));
+        printf("%d = %lld\n", i, (int)(outputArray->commands[i]));
+        fprintf(outputFile, "%lld\n", (int)(outputArray->commands[i]));
     }
 }
