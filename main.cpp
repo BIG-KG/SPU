@@ -11,9 +11,9 @@
 
 
 const int SCALING_FACTOR   = 100;
-const int DRAWING_RAM_SIZE = 400;
-const int LINE_SIZE        = 20 ;
-const int FULL_RAM_SIZE    = 420;
+const int DRAWING_RAM_SIZE = 900;
+const int LINE_SIZE        = 30 ;
+const int FULL_RAM_SIZE    = 920;
 
 int file_to_array(int **commandsArray, int file);
 
@@ -25,7 +25,7 @@ struct SPU_type{
     int *commands     = NULL;
     int numOfCommands = 0;
     int registers[5]  = {};
-    int RAM[420]      = {};
+    int RAM[FULL_RAM_SIZE]      = {};
 };
 
 struct command_bits
@@ -33,7 +33,7 @@ struct command_bits
     int     commandNum  : 5;
     int     memoryType  : 3;
     int     registerNum : 3;
-    int     constValue  : 20;
+    int     constValue  : 21;
 };
 
 
@@ -60,7 +60,7 @@ void main_runner(int commandsFile)
     while(SPU.ip < SPU.numOfCommands && run == 1){
 
     command = (command_bits *)(&SPU.commands[SPU.ip]);
-    //printf("command = %d\n", SPU.ip);
+   // printf("command = %d\n", SPU.ip);
 
     #define DEF_CMD(name, CODE, argType, codetxt)   \
         case (CODE):                                \
@@ -129,6 +129,7 @@ int *get_arg(command_bits* command, SPU_type* SPU)
     if (  (mode & 2) != 0)
     {
         argument = &(SPU->registers)[command->registerNum];
+       // printf()
     }
 
 
@@ -148,9 +149,7 @@ int *get_arg(command_bits* command, SPU_type* SPU)
 
     if( (mode & 4)  != 0)
     {
-        //printf("ramarg = %d\n", *argument);
         argument = &(SPU->RAM)[*argument / SCALING_FACTOR];
-        //printf("end ram");
     }
 
     return argument;

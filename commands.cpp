@@ -16,7 +16,6 @@ DEF_CMD("end", END, 0,
 
 DEF_CMD("pop", POP, 1,
 {
-//    printf("111\n");
     argument = get_arg(command, &SPU);
     *argument = pop(SPU.stc);
 
@@ -24,10 +23,11 @@ DEF_CMD("pop", POP, 1,
 
 DEF_CMD("push", PSH, 1,
 {
-  //  printf("222\n");
+      //printf("222\n");
     argument = get_arg(command, &SPU);
     //printf("pushing arg = %d\n",  (*argument));
     push (SPU.stc, (*argument) );
+    //printf("endpush\n");
 
 })
 
@@ -40,12 +40,9 @@ DEF_CMD("add", ADD, 0,
 DEF_CMD("mul", MUL, 0,
 {
 //    printf("444\n");
-    printf("startmul\n");
     a = pop (SPU.stc);
-    printf("midmul\n");
     b = pop (SPU.stc);
     push (SPU.stc, (a * b) / SCALING_FACTOR);
-    printf("\nendmul\n");
 })
 
 DEF_CMD("sub", SUB, 0,
@@ -122,18 +119,27 @@ DEF_CMD("sqrt", SQRT, 0,
     push(SPU.stc, sqrt (pop(SPU.stc)) * sqrt (SCALING_FACTOR) );
 })
 
-// DEF_CMD("ptch", PTCH, 0,
-// {
-//     printf ("return ptch = _%c_\n", ((int)pop(SPU.stc) / SCALING_FACTOR) );
-// })
-//
-// DEF_CMD("draw", DRAW, 0,
-// {
-//     for (int i = 0; i < DRAWING_RAM_SIZE; i ++)
-//     {
-//         if(SPU.RAM[i] == 1) printf("%c", '@');
-//         else                printf("%c", ' ');
-//
-//         if( (i + 1) % LINE_SIZE == 0 ) printf("\n");
-//     }
-// })
+DEF_CMD("draw", DRAW, 0,
+{
+    for (int i = 0; i < DRAWING_RAM_SIZE; i ++)
+    {
+        if((SPU.RAM)[i] != 0)
+        {
+            printf("@");
+        }
+
+        else
+        {
+            printf(" ", (SPU.RAM)[i]);
+        }
+
+        if( (i + 1) % LINE_SIZE == 0 ) printf("\n");
+    }
+})
+
+DEF_CMD("ptch", PTCH, 0,
+{
+    printf ("return ptch = _%c_\n", ((int)pop(SPU.stc) / SCALING_FACTOR) );
+})
+
+

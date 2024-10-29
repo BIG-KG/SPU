@@ -22,7 +22,7 @@ struct command
     int     commandNUM  : 5;
     int     memoryType  : 3;
     int     registerNum : 3;
-    int     constValue  : 20;
+    int     constValue  : 21;
 };
 
 

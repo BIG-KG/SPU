@@ -1,6 +1,6 @@
-push 5
+push 8
 pop DX
-push 9
+push 13
 pop CX
 
 
@@ -8,32 +8,39 @@ push 0
 pop AX
 
     ^main_cikle
+    push AX
+    look
 
     call :find_y
-    pop [410]
+    pop [910]
+
     call :find_x
-    pop [411]
+    pop [911]
 
-    push [410]
+    push [910]
     push CX
     sub
-    push [410]
+    push [910]
     push CX
     sub
     mul
 
-    push [411]
+    push [911]
     push CX
     sub
-    push [411]
+    push [911]
     push CX
     sub
     mul
+
 
     add
     sqrt
+    pop [909]
+    push [909]
+
     push DX
-    jmpl :incirc
+    jmpm :incirc
     jmp  :nincirc
 
     ^incirc
@@ -53,18 +60,18 @@ pop AX
     pop AX
 
     push AX
-    push 399
-    jmpl :main_cikle
+    push 900
+    jmpm :main_cikle
 
     draw
-
+    end
 
 ^find_y
     push 0
     pop BX
     ^uuu
         push BX
-        push 20
+        push 30
         add
         pop BX
         push BX
@@ -76,17 +83,18 @@ pop AX
 
     ^find
         push BX
-        push 20
+        push 30
         sub
 
-        push 20
+        push 30
         div
-        return
+        ret
 
 
 ^find_x
     push AX
-    push [410]
-    push 20
+    push [910]
+    push 30
     mul
     sub
+    ret
