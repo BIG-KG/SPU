@@ -1,6 +1,8 @@
 push 5
 pop AX
 push AX
+push 66
+look
 
 call :frac
 look
@@ -8,6 +10,9 @@ end
 
 
 ^frac
+
+push 77
+look
 
 pop AX
 push AX
@@ -19,9 +24,13 @@ push 1
 sub
 
 call :frac
+push 88
+look
 mul
 ret
 
 ^one_end
+push 99
+look
 push 1
 ret

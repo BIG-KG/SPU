@@ -10,7 +10,10 @@
 #include "enums.cpp"
 
 
-const int SCALING_FACTOR = 100;
+const int SCALING_FACTOR   = 100;
+const int DRAWING_RAM_SIZE = 400;
+const int LINE_SIZE        = 20 ;
+const int FULL_RAM_SIZE    = 420;
 
 int file_to_array(int **commandsArray, int file);
 
@@ -22,7 +25,7 @@ struct SPU_type{
     int *commands     = NULL;
     int numOfCommands = 0;
     int registers[5]  = {};
-    int RAM[100]      = {};
+    int RAM[420]      = {};
 };
 
 struct command_bits
@@ -57,6 +60,7 @@ void main_runner(int commandsFile)
     while(SPU.ip < SPU.numOfCommands && run == 1){
 
     command = (command_bits *)(&SPU.commands[SPU.ip]);
+    //printf("command = %d\n", SPU.ip);
 
     #define DEF_CMD(name, CODE, argType, codetxt)   \
         case (CODE):                                \
@@ -144,7 +148,9 @@ int *get_arg(command_bits* command, SPU_type* SPU)
 
     if( (mode & 4)  != 0)
     {
-        argument = &(SPU->RAM)[*argument];
+        //printf("ramarg = %d\n", *argument);
+        argument = &(SPU->RAM)[*argument / SCALING_FACTOR];
+        //printf("end ram");
     }
 
     return argument;

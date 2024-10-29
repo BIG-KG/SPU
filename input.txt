@@ -1,9 +1,6 @@
-push 5
+push 99
 pop AX
-push AX
-look
-
-push 4
-pop AX
-push AX
+push 77
+pop [AX]
+push [99]
 look

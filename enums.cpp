@@ -13,6 +13,7 @@ enum SPU_math_commands{
     JMPE,
     CALL,
     RETURN,
-    SQRT
-
+    SQRT,
+    PTCH,
+    DRAW
 };

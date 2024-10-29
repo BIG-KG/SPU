@@ -10,7 +10,7 @@
 #include "compiller_func.h"
 #include "cmpiller_types.h"
 
-const int SCALING_FACTOR = 1000;
+const int SCALING_FACTOR = 100;
 
 enum returnings_types{
     REED  = 0,
@@ -27,7 +27,7 @@ struct command
 
 
 int main(int argc, char *argv[])
-{`
+{
 	FILE *inputFile     = fopen (argv[1] ,         "r");
 	FILE *outputFile    = fopen ("compilled.txt" , "w");
 	char command[30]    = "";
@@ -147,6 +147,16 @@ int main(int argc, char *argv[])
             outputArray.commands[outputArray.currentCommand] = SQRT;
         }
 
+        else if (strcmp (command, "ptch") == 0)
+        {
+            outputArray.commands[outputArray.currentCommand] = PTCH;
+        }
+
+        else if (strcmp (command, "draw") == 0)
+        {
+            outputArray.commands[outputArray.currentCommand] = DRAW;
+        }
+
         else if ( command[0] == '^')
         {
             continue;
@@ -254,7 +264,7 @@ void compile_args(FILE *inputFile, char returningMode, struct output_commands *o
 
         if (returningReg < 1 || returningReg > 4)
         {
-            printf("ERROR, REFERENSE TO UNEXISEBLE REGISTER\n");
+            printf("ERROR, REFERENSE TO UNEXISEBLE REGISTER: _%s_\n", &command[current]);
             assert(0);
 
         }

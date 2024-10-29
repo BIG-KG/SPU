@@ -1,0 +1,92 @@
+push 5
+pop DX
+push 9
+pop CX
+
+
+push 0
+pop AX
+
+    ^main_cikle
+
+    call :find_y
+    pop [410]
+    call :find_x
+    pop [411]
+
+    push [410]
+    push CX
+    sub
+    push [410]
+    push CX
+    sub
+    mul
+
+    push [411]
+    push CX
+    sub
+    push [411]
+    push CX
+    sub
+    mul
+
+    add
+    sqrt
+    push DX
+    jmpl :incirc
+    jmp  :nincirc
+
+    ^incirc
+        push 1
+        pop [AX]
+        jmp :continue
+
+    ^nincirc
+        push 0
+        pop [AX]
+        jmp :continue
+
+    ^continue
+    push AX
+    push 1
+    add
+    pop AX
+
+    push AX
+    push 399
+    jmpl :main_cikle
+
+    draw
+
+
+^find_y
+    push 0
+    pop BX
+    ^uuu
+        push BX
+        push 20
+        add
+        pop BX
+        push BX
+        push AX
+
+        jmpl :find
+
+        jmp :uuu
+
+    ^find
+        push BX
+        push 20
+        sub
+
+        push 20
+        div
+        return
+
+
+^find_x
+    push AX
+    push [410]
+    push 20
+    mul
+    sub

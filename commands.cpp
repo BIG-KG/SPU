@@ -58,7 +58,7 @@ DEF_CMD("sub", SUB, 0,
 
 DEF_CMD("look", LUK, 0,
 {
-    //printf("666\n");
+   // printf("666\n");
     printf ("return look = %f\n", ((float)pop(SPU.stc) / SCALING_FACTOR));
 })
 
@@ -121,3 +121,19 @@ DEF_CMD("sqrt", SQRT, 0,
 {
     push(SPU.stc, sqrt (pop(SPU.stc)) * sqrt (SCALING_FACTOR) );
 })
+
+// DEF_CMD("ptch", PTCH, 0,
+// {
+//     printf ("return ptch = _%c_\n", ((int)pop(SPU.stc) / SCALING_FACTOR) );
+// })
+//
+// DEF_CMD("draw", DRAW, 0,
+// {
+//     for (int i = 0; i < DRAWING_RAM_SIZE; i ++)
+//     {
+//         if(SPU.RAM[i] == 1) printf("%c", '@');
+//         else                printf("%c", ' ');
+//
+//         if( (i + 1) % LINE_SIZE == 0 ) printf("\n");
+//     }
+// })
