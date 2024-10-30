@@ -17,3 +17,10 @@ enum SPU_math_commands{
     DRAW,
     PTCH
 };
+
+struct command_t
+{
+    int     commandNUM  : 7;
+    int     memoryType  : 3;
+    int     registerNum : 3;
+};

@@ -1,11 +1,14 @@
-push 99
-pop [99]
-push 100
-pop [100]
+push 5
+pop AX
 
-push [100]
+^test_jmp
+push AX
 look
-push [99]
-look
-
-draw
+push AX
+push 1
+sub
+pop AX
+push AX
+push 0
+jmpl :test_jmp
+end
