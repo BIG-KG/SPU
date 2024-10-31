@@ -11,13 +11,40 @@
 #include "processro_const&t.h"
 #include "processor_funks.h"
 
+#define DEF_CMD(name, CODE, argType, codetxt)             \
+    void funk_##CODE(SPU_type *SPU, command_t *command){   \
+        codetxt                                           \
+    }                                                     \
+
+#include "commands.cpp"
+#undef DEF_CMD
+
+struct command_to_funk{
+    int commandNUM = 0;
+    void (*message) (SPU_type *SPU, command_t *command);
+};
+
+command_to_funk code_to_funk[32] = {};
+
+
+
 void main_runner(int commandsFile)
 {
+    #define DEF_CMD(name, CODE, argType, codetxt)               \
+        code_to_funk[ CODE ].commandNUM = CODE       ;           \
+        code_to_funk[ CODE ].message    = funk_##CODE;           \
+
+
+    #include "commands.cpp"
+    #undef DEF_CMD
+
     SPU_type SPU      = {};
     SPU.stc           = stack_ctor();
     SPU.returns       = stack_ctor();
-    int64_t a             = 0;
-    int64_t b             = 0;
+    SPU.run           = 1;
+    int64_t a         = 0;
+    int64_t b         = 0;
+
 
     SPU.numOfCommands = file_to_array(&SPU.commands, commandsFile);
 
@@ -26,29 +53,23 @@ void main_runner(int commandsFile)
     // }
     // printf("\n\n\n");
     command_t *command = NULL;
-    int *argument         = NULL;
-    int run               = 1;
 
-    while(SPU.ip < SPU.numOfCommands && run == 1){
 
-    command = (command_t *)(&SPU.commands[SPU.ip]);
-    //printf("command = %d      ->      %d\n", SPU.ip, SPU.commands[SPU.ip]);
+    while(SPU.ip < SPU.numOfCommands && SPU.run == 1){
 
-    #define DEF_CMD(name, CODE, argType, codetxt)   \
-        case (CODE):                                \
-            codetxt                                 \
-            break;                                  \
-                                                    \
-                                                    \
+        command = (command_t *)(&SPU.commands[SPU.ip]);
+        //printf("command = %d      ->      %d\n", SPU.ip, SPU.commands[SPU.ip]);
 
-        switch (command->commandNum)
+        if (  command->commandNUM >= 0 && command->commandNUM < 17  )
         {
-            #include "commands.cpp"
-
-            default:
-                printf ("\nSyntax error -%d-         ip = %d\n", command->commandNum, SPU.ip);
+            code_to_funk[command->commandNUM].message(&SPU, command);
         }
-    #undef  DEF_CMD
+        else
+        {
+            printf ("\nSyntax error -%d-         ip = %d\n", command->commandNUM, SPU.ip);
+            assert(0);
+        }
+
         SPU.ip++;
     }
     //printf("cycle_out\n");
