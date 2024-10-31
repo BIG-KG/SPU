@@ -142,4 +142,19 @@ DEF_CMD("ptch", PTCH, 0,
     printf ("return ptch = _%c_\n", ((int)pop(SPU->stc) / SCALING_FACTOR) );
 })
 
+DEF_CMD("input", INPT, 0,
+{
+    float a = 0;
+    scanf("%f", &a);
+    push (SPU->stc, (int)(a * SCALING_FACTOR));
+})
+
+DEF_CMD("input", INPT, 0,
+{
+    float a = 0;
+    scanf("%f", &a);
+    push (SPU->stc, (int)(a * SCALING_FACTOR));
+})
+
+
 

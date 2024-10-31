@@ -30,10 +30,11 @@ command_to_funk code_to_funk[32] = {};
 
 void main_runner(int commandsFile)
 {
-    #define DEF_CMD(name, CODE, argType, codetxt)               \
+    int lastNum = 0;
+    #define DEF_CMD(name, CODE, argType, codetxt)                \
         code_to_funk[ CODE ].commandNUM = CODE       ;           \
         code_to_funk[ CODE ].message    = funk_##CODE;           \
-
+        lastNum ++;                                              \
 
     #include "commands.cpp"
     #undef DEF_CMD
@@ -60,7 +61,7 @@ void main_runner(int commandsFile)
         command = (command_t *)(&SPU.commands[SPU.ip]);
         //printf("command = %d      ->      %d\n", SPU.ip, SPU.commands[SPU.ip]);
 
-        if (  command->commandNUM >= 0 && command->commandNUM < 17  )
+        if (  command->commandNUM >= 0 && command->commandNUM <= lastNum  )
         {
             code_to_funk[command->commandNUM].message(&SPU, command);
         }

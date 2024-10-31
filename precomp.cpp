@@ -21,7 +21,8 @@ enum SPU_math_commands{
     RETURN,
     SQRT,
     DRAW,
-    PTCH
+    PTCH,
+    INPT
 };
 
 struct command_t
@@ -33,9 +34,9 @@ struct command_t
 # 11 "main.cpp" 2
 # 1 "processro_const&t.h" 1
 const int SCALING_FACTOR = 100;
-const int DRAWING_RAM_SIZE = 1600;
-const int LINE_SIZE = 40 ;
-const int FULL_RAM_SIZE = 1620;
+const int DRAWING_RAM_SIZE = 2500;
+const int LINE_SIZE = 50 ;
+const int FULL_RAM_SIZE = 2520;
 
 struct SPU_type
 {
@@ -62,7 +63,7 @@ int *get_arg(command_t* command, SPU_type* SPU);
 
 # 1 "commands.cpp" 1
 # 9 "commands.cpp"
-void funk_END(SPU_type SPU, command_t *command){ { SPU->ip = SPU->numOfCommands + 1; run = 0; } }
+void funk_END(SPU_type *SPU, command_t *command){ { SPU->ip = SPU->numOfCommands + 1; SPU->run = 0; } }
 
 
 
@@ -70,30 +71,22 @@ void funk_END(SPU_type SPU, command_t *command){ { SPU->ip = SPU->numOfCommands 
 
 
 
-void funk_POP(SPU_type SPU, command_t *command){ { int argument = get_arg(command, SPU); *argument = pop(SPU->stc); } }
+void funk_POP(SPU_type *SPU, command_t *command){ { int* argument = get_arg(command, SPU); *argument = pop(SPU->stc); } }
 
 
 
 
 
 
-void funk_PSH(SPU_type SPU, command_t *command){ { int argument = get_arg(command, SPU); push (SPU->stc, (*argument) ); } }
+void funk_PSH(SPU_type *SPU, command_t *command){ { int* argument = get_arg(command, SPU); push (SPU->stc, (*argument) ); } }
 # 34 "commands.cpp"
-void funk_ADD(SPU_type SPU, command_t *command){ { push (SPU->stc, pop (SPU->stc) + pop (SPU->stc)); } }
+void funk_ADD(SPU_type *SPU, command_t *command){ { push (SPU->stc, pop (SPU->stc) + pop (SPU->stc)); } }
 
 
 
 
 
-void funk_MUL(SPU_type SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); push (SPU->stc, (a * b) / SCALING_FACTOR); } }
-
-
-
-
-
-
-
-void funk_SUB(SPU_type SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); push (SPU->stc, b - a); } }
+void funk_MUL(SPU_type *SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); push (SPU->stc, (a * b) / SCALING_FACTOR); } }
 
 
 
@@ -101,20 +94,28 @@ void funk_SUB(SPU_type SPU, command_t *command){ { int a = pop (SPU->stc); int b
 
 
 
-void funk_LUK(SPU_type SPU, command_t *command){ { printf ("return look = %f\n", ((float)pop(SPU->stc) / SCALING_FACTOR)); } }
+void funk_SUB(SPU_type *SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); push (SPU->stc, b - a); } }
 
 
 
 
 
-void funk_DIV(SPU_type SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); push (SPU->stc, ((float)b / (float)a) * SCALING_FACTOR); } }
+
+
+void funk_LUK(SPU_type *SPU, command_t *command){ { printf ("return look = %f\n", ((float)pop(SPU->stc) / SCALING_FACTOR)); } }
+
+
+
+
+
+void funk_DIV(SPU_type *SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); push (SPU->stc, ((float)b / (float)a) * SCALING_FACTOR); } }
 # 71 "commands.cpp"
-void funk_JMP(SPU_type SPU, command_t *command){ { SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR -1 ; } }
+void funk_JMP(SPU_type *SPU, command_t *command){ { SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR -1 ; } }
 
 
 
 
-void funk_JMPM(SPU_type SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); if (a > b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; else SPU->ip++; } }
+void funk_JMPM(SPU_type *SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); if (a > b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; else SPU->ip++; } }
 
 
 
@@ -122,11 +123,11 @@ void funk_JMPM(SPU_type SPU, command_t *command){ { int a = pop (SPU->stc); int 
 
 
 
-void funk_JMPL(SPU_type SPU, command_t *command){ { a = pop (SPU->stc); b = pop (SPU->stc); if (a < b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; else SPU->ip++; } }
+void funk_JMPL(SPU_type *SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); if (a < b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; else SPU->ip++; } }
 # 93 "commands.cpp"
-void funk_JMPE(SPU_type SPU, command_t *command){ { a = pop (SPU->stc); b = pop (SPU->stc); if (a == b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; else SPU->ip++; } }
+void funk_JMPE(SPU_type *SPU, command_t *command){ { int a = pop (SPU->stc); int b = pop (SPU->stc); if (a == b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; else SPU->ip++; } }
 # 102 "commands.cpp"
-void funk_CALL(SPU_type SPU, command_t *command){ { push(SPU->returns, SPU->ip + 2); SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; } }
+void funk_CALL(SPU_type *SPU, command_t *command){ { push(SPU->returns, SPU->ip + 2); SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ; } }
 
 
 
@@ -134,27 +135,32 @@ void funk_CALL(SPU_type SPU, command_t *command){ { push(SPU->returns, SPU->ip +
 
 
 
-void funk_RETURN(SPU_type SPU, command_t *command){ { SPU->ip = pop(SPU->returns) - 1; } }
+void funk_RETURN(SPU_type *SPU, command_t *command){ { SPU->ip = pop(SPU->returns) - 1; } }
 
 
 
 
 
 
-void funk_SQRT(SPU_type SPU, command_t *command){ { push(SPU->stc, sqrt (pop(SPU->stc)) * sqrt (SCALING_FACTOR) ); } }
+void funk_SQRT(SPU_type *SPU, command_t *command){ { push(SPU->stc, sqrt (pop(SPU->stc)) * sqrt (SCALING_FACTOR) ); } }
 
 
 
 
-void funk_DRAW(SPU_type SPU, command_t *command){ { for (int i = 0; i < DRAWING_RAM_SIZE; i ++) { if((SPU->RAM)[i] != 0) { printf("@"); } else { printf(" ", (SPU->RAM)[i]); } if( (i + 1) % LINE_SIZE == 0 ) printf("\n"); } } }
+void funk_DRAW(SPU_type *SPU, command_t *command){ { for (int i = 0; i < DRAWING_RAM_SIZE; i ++) { if((SPU->RAM)[i] != 0) { printf("@"); } else { printf(" ", (SPU->RAM)[i]); } if( (i + 1) % LINE_SIZE == 0 ) printf("\n"); } } }
 # 140 "commands.cpp"
-void funk_PTCH(SPU_type SPU, command_t *command){ { printf ("return ptch = _%c_\n", ((int)pop(SPU->stc) / SCALING_FACTOR) ); } }
+void funk_PTCH(SPU_type *SPU, command_t *command){ { printf ("return ptch = _%c_\n", ((int)pop(SPU->stc) / SCALING_FACTOR) ); } }
+
+
+
+
+void funk_INPT(SPU_type *SPU, command_t *command){ { int a = 0; scanf("%f", &a); push (SPU->stc, (int)(a * SCALING_FACTOR)); } }
 # 20 "main.cpp" 2
 
 
 struct command_to_funk{
     int commandNUM = 0;
-    void (*message) (SPU_type SPU, command_t *command);
+    void (*message) (SPU_type *SPU, command_t *command);
 };
 
 command_to_funk code_to_funk[32] = {};
@@ -257,6 +263,11 @@ code_to_funk[ SQRT ].commandNUM = SQRT ; code_to_funk[ SQRT ].message = funk_SQR
 code_to_funk[ DRAW ].commandNUM = DRAW ; code_to_funk[ DRAW ].message = funk_DRAW;
 # 140 "commands.cpp"
 code_to_funk[ PTCH ].commandNUM = PTCH ; code_to_funk[ PTCH ].message = funk_PTCH;
+
+
+
+
+code_to_funk[ INPT ].commandNUM = INPT ; code_to_funk[ INPT ].message = funk_INPT;
 # 39 "main.cpp" 2
 
 
@@ -277,18 +288,18 @@ code_to_funk[ PTCH ].commandNUM = PTCH ; code_to_funk[ PTCH ].message = funk_PTC
     command_t *command = NULL;
 
 
-    while(SPU.ip < SPU.numOfCommands && run == 1){
+    while(SPU.ip < SPU.numOfCommands && SPU.run == 1){
 
         command = (command_t *)(&SPU.commands[SPU.ip]);
 
 
-        if ( command->commandNum >= 0 && command->commandNum < 17 )
+        if ( command->commandNUM >= 0 && command->commandNUM < 17 )
         {
-            code_to_funk[command->commandNum].message(&SPU, command);
+            code_to_funk[command->commandNUM].message(&SPU, command);
         }
         else
         {
-            printf ("\nSyntax error -%d-         ip = %d\n", command->commandNum, SPU.ip);
+            printf ("\nSyntax error -%d-         ip = %d\n", command->commandNUM, SPU.ip);
             assert(0);
         }
 

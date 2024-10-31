@@ -2,7 +2,7 @@ all: hello
 
 hello: main.o stackfunk.o const.o canary.o onegin.o
 	g++ -c main.cpp
-	g++ main.o stackfunk.o const.o canary.o onegin.o -o hello0
+	g++ main.o stackfunk.o const.o canary.o onegin.o -o hell
 
 main.o: main.cpp
 	g++ -c main.cpp

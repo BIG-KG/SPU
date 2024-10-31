@@ -15,7 +15,8 @@ enum SPU_math_commands{
     RETURN,
     SQRT,
     DRAW,
-    PTCH
+    PTCH,
+    INPT
 };
 
 struct command_t

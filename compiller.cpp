@@ -140,6 +140,11 @@ int main(int argc, char *argv[])
             outputArray.commands[outputArray.currentCommand] = DRAW;
         }
 
+        else if (strcmp (command, "input") == 0)
+        {
+            outputArray.commands[outputArray.currentCommand] = INPT;
+        }
+
         else if ( command[0] == '^')
         {
             continue;
