@@ -1,1 +1,1 @@
-int *get_arg(command_t* command, SPU_type* SPU);
+int64_t *get_arg(command_t* command, SPU_type* SPU);

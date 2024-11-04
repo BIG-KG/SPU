@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include "cpmp_types.h"
+#include "processor_const.h"
 
 #include "common_info.cpp"
 #include "compiller_func.h"
@@ -145,7 +146,36 @@ int main(int argc, char *argv[])
             outputArray.commands[outputArray.currentCommand] = INPT;
         }
 
-        else if ( command[0] == '^')
+        else if (strcmp (command, "sin") == 0)
+        {
+            outputArray.commands[outputArray.currentCommand] = SIN;
+        }
+
+        else if (strcmp (command, "cos") == 0)
+        {
+            outputArray.commands[outputArray.currentCommand] = COS;
+        }
+
+        else if (strcmp (command, "acos") == 0)
+        {
+            outputArray.commands[outputArray.currentCommand] = ACOS;
+        }
+
+        else if (strcmp (command, "popv" ) == 0)
+        {
+            printf("popppv\n");
+            compile_args(inputFile, WRITE, &outputArray, POPV);
+        }
+
+        else if (strcmp (command, "pushv") == 0)
+        {
+            compile_args (inputFile, REED, &outputArray, PSHV);
+
+        }
+
+
+
+        else if ( command[0] == '^' || command[0] == '~')
         {
             continue;
         }
@@ -200,6 +230,11 @@ int find_tags (FILE *inputFile, tag *tagsArray)
             }
             (tagsArray[i]).contain = ip;
             i++;
+            continue;
+        }
+
+        else if (command[0] == '~')
+        {
             continue;
         }
 
@@ -280,7 +315,7 @@ void compile_args(FILE *inputFile, char returningMode, struct output_commands *o
         }
 
         typeOfMemory += 1;
-        returningConst = atoi (&command[current]);
+        returningConst = (int64_t)(atof (&command[current]) * (float)SCALING_FACTOR);
         //printf("const value     %d\n", returningConst);
     }
 
@@ -292,6 +327,15 @@ void compile_args(FILE *inputFile, char returningMode, struct output_commands *o
         assert (0);
     }
 
+    if ( commandNUM == POPV || commandNUM == PSHV )
+    {
+        if ( (typeOfMemory&1)  == 0)
+        {
+            typeOfMemory += 1;
+        }
+        returningConst += NOT_VID_RAM;
+    }
+
     struct command_t tmprCmd = {};
     tmprCmd.commandNUM  = commandNUM;
     tmprCmd.registerNum = returningReg;
@@ -301,7 +345,7 @@ void compile_args(FILE *inputFile, char returningMode, struct output_commands *o
     if (typeOfMemory & 1 != 0 )
     {
         outputArray->currentCommand ++;
-        outputArray->commands[outputArray->currentCommand] = returningConst * SCALING_FACTOR;
+        outputArray->commands[outputArray->currentCommand] = returningConst;
     }
 
     // printf("%lld", typeOfMemory);

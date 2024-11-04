@@ -18,8 +18,6 @@ struct output_commands
         int maxCommands    = START_COMMAND_ARR_SIZE;
 };
 
-const int SCALING_FACTOR = 100;
-
 enum returnings_types
 {
     REED  = 0,

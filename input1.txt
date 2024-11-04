@@ -1,2 +1,34 @@
-input
+push 3
+push 4
+push 6
+call :angl
 look
+end
+
+
+^angl
+    pop CX
+    pop BX
+    pop AX
+
+    push AX
+    push AX
+    mul
+    push BX
+    push BX
+    mul
+    add
+    push CX
+    push CX
+    mul
+    sub
+
+    push 2
+    push AX
+    mul
+    push BX
+    mul
+
+    div
+    acos
+    ret

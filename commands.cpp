@@ -16,18 +16,17 @@ DEF_CMD("end", END, 0,
 
 DEF_CMD("pop", POP, 1,
 {
-    int* argument = get_arg(command, SPU);
+    int64_t* argument = get_arg(command, SPU);
     *argument = pop(SPU->stc);
+    //printf("uid = %d\n", argument - SPU->registers);
+    //printf("pop\n");
 
 })
 
 DEF_CMD("push", PSH, 1,
 {
-      //printf("222\n");
-    int* argument = get_arg(command, SPU);
-    //printf("pushing arg = %d\n",  (*argument));
+    int64_t* argument = get_arg(command, SPU);
     push (SPU->stc, (*argument) );
-    //printf("endpush\n");
 
 })
 
@@ -40,31 +39,32 @@ DEF_CMD("add", ADD, 0,
 DEF_CMD("mul", MUL, 0,
 {
 //    printf("444\n");
-    int a = pop (SPU->stc);
-    int b = pop (SPU->stc);
+    int64_t a = pop (SPU->stc);
+    int64_t b = pop (SPU->stc);
     push (SPU->stc, (a * b) / SCALING_FACTOR);
 })
 
 DEF_CMD("sub", SUB, 0,
 {
   //  printf("555\n");
-    int a = pop (SPU->stc);
-    int b = pop (SPU->stc);
+    int64_t a = pop (SPU->stc);
+    int64_t b = pop (SPU->stc);
     push (SPU->stc, b - a);
 })
 
 DEF_CMD("look", LUK, 0,
 {
-   // printf("666\n");
-    printf ("return look = %f\n", ((float)pop(SPU->stc) / SCALING_FACTOR));
+    printf("look");
+    double a = (double)pop(SPU->stc) / SCALING_FACTOR;
+    printf ("return look = %f\n", (a));
 })
 
 DEF_CMD("div",  DIV, 0,
 {
 //    printf("777\n");
-    int a = pop (SPU->stc);
-    int b = pop (SPU->stc);
-    push (SPU->stc, ((float)b / (float)a) * SCALING_FACTOR);
+    int64_t a = pop (SPU->stc);
+    int64_t b = pop (SPU->stc);
+    push (SPU->stc, ((double)b / (double)a) * SCALING_FACTOR);
     //printf("div = %d\n", b / a);
 })
 
@@ -75,26 +75,26 @@ DEF_CMD("jmp",  JMP,  2,
 
 DEF_CMD("jmpm", JMPM, 2,
 {
-    int a = pop (SPU->stc);
-    int b = pop (SPU->stc);
+    int64_t a = pop (SPU->stc);
+    int64_t b = pop (SPU->stc);
     if (a >  b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1  ;
     else SPU->ip++;
 })
 
 DEF_CMD("jmpl", JMPL, 2,
 {
-    int a = pop (SPU->stc);
-    int b = pop (SPU->stc);
-    //printf("a = %d")
+    int64_t a = pop (SPU->stc);
+    int64_t b = pop (SPU->stc);
+    printf("a = %d     b = %d\n", a, b);
     if (a <  b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1  ;
     else SPU->ip++;
+    printf("%d\n", SPU->ip);
 })
 
 DEF_CMD("jmpe", JMPE, 2,
 {
-    int a = pop (SPU->stc);
-    int b = pop (SPU->stc);
-    //sprintf("com = 11          a = %d b = %d\n", a, b);
+    int64_t a = pop (SPU->stc);
+    int64_t b = pop (SPU->stc);
     if (a == b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1  ;
     else SPU->ip++;
 })
@@ -103,7 +103,8 @@ DEF_CMD("call", CALL, 2,
 {
     //printf("com = 12\n");
     push(SPU->returns, SPU->ip + 2);
-    SPU->ip             = (*get_arg(command, SPU)) / SCALING_FACTOR - 1 ;
+    int a = (*get_arg(command, SPU)) / SCALING_FACTOR - 1;
+    SPU->ip             =  a;
     //printf("new ip  = %d\n", SPU.ip);
 })
 
@@ -121,40 +122,74 @@ DEF_CMD("sqrt", SQRT, 0,
 
 DEF_CMD("draw", DRAW, 0,
 {
-    for (int i = 0; i < DRAWING_RAM_SIZE; i ++)
+
+    printf("DRAW\n");
+    for (int64_t i = 0; i < 15 * 15; i ++)
     {
-        if((SPU->RAM)[i] != 0)
+       // printf(" %d ", (i * 3) + 50);
+        if((SPU->RAM)[i * 3 + 50] != 0)
         {
-            printf("@");
+            printf(" %3d ", (SPU->RAM)[i * 3 + 50]/1000);
+
+
         }
 
         else
         {
-            printf(" ", (SPU->RAM)[i]);
+            printf("     ", (SPU->RAM)[i]);
         }
 
-        if( (i + 1) % LINE_SIZE == 0 ) printf("\n");
+        if( (i + 1) % 15 == 0 ) printf("\n");
     }
 })
 
 DEF_CMD("ptch", PTCH, 0,
 {
-    printf ("return ptch = _%c_\n", ((int)pop(SPU->stc) / SCALING_FACTOR) );
+    printf ("return ptch = _%c_\n", ((int64_t)pop(SPU->stc) / SCALING_FACTOR) );
 })
 
 DEF_CMD("input", INPT, 0,
 {
-    float a = 0;
+    double a = 0;
     scanf("%f", &a);
-    push (SPU->stc, (int)(a * SCALING_FACTOR));
+    push (SPU->stc, (int64_t)(a * SCALING_FACTOR));
 })
 
-DEF_CMD("input", INPT, 0,
+DEF_CMD("sin", SIN, 0,
 {
-    float a = 0;
-    scanf("%f", &a);
-    push (SPU->stc, (int)(a * SCALING_FACTOR));
+    double a = ((double)pop(SPU->stc) / SCALING_FACTOR);
+    a = (sin( a ) * SCALING_FACTOR);
+    push (SPU->stc, (int64_t)a );
 })
 
+DEF_CMD("cos", COS, 0,
+{
+    double a = ((double)pop(SPU->stc) / SCALING_FACTOR);
+    a = (cos( a ) * SCALING_FACTOR);
+    push (SPU->stc, (int64_t)a );
+})
 
+DEF_CMD("acos", ACOS, 0,
+{
+    double a = ((double)pop(SPU->stc) / SCALING_FACTOR);
+    a = (acos( a ) * SCALING_FACTOR);
+    push (SPU->stc, (int64_t)a );
+})
+
+DEF_CMD("popv", POPV, 1,
+{
+    int64_t* argument = get_arg(command, SPU);
+    *argument = pop(SPU->stc);
+
+})
+
+DEF_CMD("pushv", PSHV, 1,
+{
+      //printf("222\n");
+    int64_t* argument = get_arg(command, SPU);
+    //printf("pushing arg = %d\n",  (*argument));
+    push (SPU->stc, (*argument) );
+    //printf("endpush\n");
+
+})
 

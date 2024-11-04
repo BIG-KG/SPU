@@ -8,7 +8,7 @@
 #include <math.h>
 
 #include "common_info.cpp"
-#include "processro_const&t.h"
+#include "processor_const.h"
 #include "processor_funks.h"
 
 #define DEF_CMD(name, CODE, argType, codetxt)             \
@@ -114,15 +114,15 @@ int file_to_array(int **commandsArray, int inputFile)
     return numStrings;
 }
 
-int *get_arg(command_t* command, SPU_type* SPU)
+int64_t *get_arg(command_t* command, SPU_type* SPU)
 {
     int mode      = command->memoryType;
-    int *argument = NULL;
-    static int containedEl = 0;
+    int64_t *argument = NULL;
+    static int64_t containedEl = 0;
 
     if (  (mode & 2) != 0)
     {
-        argument = &(SPU->registers)[command->registerNum];
+        argument = (int64_t *)&(SPU->registers)[command->registerNum];
        // printf()
     }
 
@@ -146,7 +146,7 @@ int *get_arg(command_t* command, SPU_type* SPU)
 
     if( (mode & 4)  != 0)
     {
-        argument = &(SPU->RAM)[*argument / SCALING_FACTOR];
+        argument = (int64_t *)&(SPU->RAM)[*argument / SCALING_FACTOR];
     }
 
     return argument;

@@ -16,12 +16,18 @@ enum SPU_math_commands{
     SQRT,
     DRAW,
     PTCH,
-    INPT
+    INPT,
+    SIN,
+    COS,
+    ACOS,
+    POPV,
+    PSHV
+
 };
 
 struct command_t
 {
     int     commandNUM  : 7;
     int     memoryType  : 3;
-    int     registerNum : 3;
+    int     registerNum : 5;
 };
