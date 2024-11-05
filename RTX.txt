@@ -270,7 +270,7 @@ pop [26]
         pop DX
         push DX
         push DX
-        pop DX
+        pop [24]
 
         call :shirsh
         pop CX
@@ -283,21 +283,21 @@ pop [26]
         push AX
         mul
         add
-        push DX
+        push [24]
         add
         pop AX
 
         push BX
         push BX
         mul
-        push DX
+        push [24]
         add
         pop BX
 
         push CX
         push CX
         mul
-        push DX
+        push [24]
         add
         pop CX
 

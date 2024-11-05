@@ -254,7 +254,7 @@ int pop (int64_t name)
     return returningEl;
 }
 
-int push(int64_t name, int pushingEl)
+int push(int64_t name, int64_t pushingEl)
 {
 
    // IF_ERR_GO_OUT(name);

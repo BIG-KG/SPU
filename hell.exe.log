@@ -485,3 +485,388 @@ Run file:	C:\MIPT\SPU\hell.exe
 Directory:	C:\MIPT\SPU
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: _matherr(): Математическая ошибка 1 (_DOMAIN): Нарушение области определения в функции sqrt (-2.01525e+008, [0]). Она вернет значение -1.#IND.
+
+С помощью __setusermatherr() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x49FC (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000040B63E in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txError()
+# 1 0x000000000040BC36 in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txOnMatherr()
+# 2 0x000000000042171B in C:\MIPT\SPU\hell.exe: __mingw_raise_matherr()
+# 3 0x0000000000422913 in C:\MIPT\SPU\hell.exe: sqrt()
+# 4 0x00000000004345B5 in C:\MIPT\SPU\hell.exe: std::sqrt<int>()
+# 5 0x000000000041E328 in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 6 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 7 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:17:43
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000041E33A в функции funk_SQRT() в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x49FC (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041E33A in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 1 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:17:44
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (8, 0x00): SIGFPE: Грубая ошибка в вычислениях. 
+
+Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000041E33A в функции funk_SQRT() в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#3: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x49FC (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041E33A in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 1 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:17:43
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x00007FFC7D48FE4C в функции RaiseException() в модуле C:\WINDOWS\System32\KERNELBASE.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x3014 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FFC7D48FE4C in C:\WINDOWS\System32\KERNELBASE.dll: RaiseException()
+# 2 0x00007FFC7F266D7E in C:\WINDOWS\System32\msvcrt.dll: tanhf()
+# 3 0x00007FFC7F266614 in C:\WINDOWS\System32\msvcrt.dll: tanhf()
+# 4 0x00007FFC7F25EF7E in C:\WINDOWS\System32\msvcrt.dll: acos()
+# 5 0x000000000041E75C in C:\MIPT\SPU\hell.exe: funk_ACOS()
+# 6 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 7 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:19:05
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (8, 0x00): SIGFPE: Грубая ошибка в вычислениях. 
+
+Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x00007FFC7D48FE4C в функции RaiseException() в модуле C:\WINDOWS\System32\KERNELBASE.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x3014 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FFC7D48FE4C in C:\WINDOWS\System32\KERNELBASE.dll: RaiseException()
+# 2 0x00007FFC7F266D7E in C:\WINDOWS\System32\msvcrt.dll: tanhf()
+# 3 0x00007FFC7F266614 in C:\WINDOWS\System32\msvcrt.dll: tanhf()
+# 4 0x00007FFC7F25EF7E in C:\WINDOWS\System32\msvcrt.dll: acos()
+# 5 0x000000000041E75C in C:\MIPT\SPU\hell.exe: funk_ACOS()
+# 6 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 7 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:19:05
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: _matherr(): Математическая ошибка 1 (_DOMAIN): Нарушение области определения в функции sqrt (-1.91951e+009, [0]). Она вернет значение -1.#IND.
+
+С помощью __setusermatherr() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x200C (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000040B63E in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txError()
+# 1 0x000000000040BC36 in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txOnMatherr()
+# 2 0x000000000042171B in C:\MIPT\SPU\hell.exe: __mingw_raise_matherr()
+# 3 0x0000000000422913 in C:\MIPT\SPU\hell.exe: sqrt()
+# 4 0x00000000004345B5 in C:\MIPT\SPU\hell.exe: std::sqrt<int>()
+# 5 0x000000000041E328 in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 6 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 7 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:20:20
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000041E33A в функции funk_SQRT() в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x200C (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041E33A in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 1 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 11:39:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:20:20
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: _matherr(): Математическая ошибка 1 (_DOMAIN): Нарушение области определения в функции sqrt (-2.02247e+009, [0]). Она вернет значение -1.#IND.
+
+С помощью __setusermatherr() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x37D0 (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000040B63E in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txError()
+# 1 0x000000000040BC36 in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txOnMatherr()
+# 2 0x000000000042171B in C:\MIPT\SPU\hell.exe: __mingw_raise_matherr()
+# 3 0x0000000000422913 in C:\MIPT\SPU\hell.exe: sqrt()
+# 4 0x00000000004345B5 in C:\MIPT\SPU\hell.exe: std::sqrt<int>()
+# 5 0x000000000041E328 in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 6 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 7 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 12:27:18, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:33:12
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000041E33A в функции funk_SQRT() в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x37D0 (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041E33A in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 1 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 12:27:18, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:33:12
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (8, 0x00): SIGFPE: Грубая ошибка в вычислениях. 
+
+Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000041E33A в функции funk_SQRT() в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#3: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x37D0 (Main), errno: 33 (Domain error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041E33A in C:\MIPT\SPU\hell.exe: funk_SQRT()
+# 1 0x000000000041EC82 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED64 in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 12:27:18, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 12:33:12
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------

@@ -1,8 +1,7 @@
 all: hello
 
 hello: main.o stackfunk.o const.o canary.o onegin.o
-	g++ -c main.cpp
-	g++ main.o stackfunk.o const.o canary.o onegin.o -o hell
+	g++ main.o stackfunk.o const.o canary.o onegin.o -O2 hell.exe
 
 main.o: main.cpp
 	g++ -c main.cpp

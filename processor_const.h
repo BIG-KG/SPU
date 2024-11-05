@@ -16,4 +16,3 @@ struct SPU_type
     int run                    = 1;
 };
 
-int file_to_array(int **commandsArray, int file);

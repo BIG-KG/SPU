@@ -21,7 +21,7 @@ static int hasher(int64_t name, int changeHash);
 
 int look(int64_t name, int ElNum);
 
-int push(int64_t name, int pushingEl);
+int push(int64_t name, int64_t pushingEl);
 
 int pop(int64_t name);
 

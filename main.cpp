@@ -45,8 +45,6 @@ void main_runner(int commandsFile)
     SPU.stc           = stack_ctor();
     SPU.returns       = stack_ctor();
     SPU.run           = 1;
-    int64_t a         = 0;
-    int64_t b         = 0;
 
 
     SPU.numOfCommands = file_to_array(&SPU.commands, commandsFile);
@@ -58,6 +56,7 @@ void main_runner(int commandsFile)
     command_t *command = NULL;
 
     txCreateWindow (400, 400);
+    txSetColor(TX_NULL, 0);
     while(SPU.ip < SPU.numOfCommands && SPU.run == 1){
 
         command = (command_t *)(&SPU.commands[SPU.ip]);
@@ -83,8 +82,6 @@ void main_runner(int commandsFile)
 
 int main(int argc, char *argv[])
 {
-    int *commandsArray = NULL;
-
     int commandsFile = open(argv[1], _O_BINARY | O_RDONLY );
 
     //int num = file_to_array(&commandsArray, commandsFile);
