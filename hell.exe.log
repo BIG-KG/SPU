@@ -31,3 +31,457 @@ Run file:	C:\MIPT\SPU\hell.exe
 Directory:	C:\MIPT\SPU
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420443 в функции stack_size_chk(). Попытка прочесть данные по адресу 0x0000008900000018 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xCD98 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420443 in C:\MIPT\SPU\hell.exe: stack_size_chk()
+# 1 0x00000000004208DC in C:\MIPT\SPU\hell.exe: push()
+# 2 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 3 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 4 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:37:34, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:37:53
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420443 в функции stack_size_chk(). Попытка прочесть данные по адресу 0x0000008900000018 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xCD98 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420443 in C:\MIPT\SPU\hell.exe: stack_size_chk()
+# 1 0x00000000004208DC in C:\MIPT\SPU\hell.exe: push()
+# 2 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 3 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 4 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:37:34, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:37:52
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420443 в функции stack_size_chk(). Попытка прочесть данные по адресу 0x0000008900000018 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x6B08 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420443 in C:\MIPT\SPU\hell.exe: stack_size_chk()
+# 1 0x00000000004208DC in C:\MIPT\SPU\hell.exe: push()
+# 2 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 3 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 4 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:37:34, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:40:33
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420443 в функции stack_size_chk(). Попытка прочесть данные по адресу 0x0000008900000018 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0x6B08 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420443 in C:\MIPT\SPU\hell.exe: stack_size_chk()
+# 1 0x00000000004208DC in C:\MIPT\SPU\hell.exe: push()
+# 2 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 3 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 4 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:37:34, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:40:33
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420181 в функции stack_ok(). Попытка прочесть данные по адресу 0x0000008900000000 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xD4C4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420181 in C:\MIPT\SPU\hell.exe: stack_ok()
+# 2 0x000000000042093B in C:\MIPT\SPU\hell.exe: push()
+# 3 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 4 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 5 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:42:39, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:42:49
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420181 в функции stack_ok(). Попытка прочесть данные по адресу 0x0000008900000000 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xD4C4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420181 in C:\MIPT\SPU\hell.exe: stack_ok()
+# 2 0x000000000042093B in C:\MIPT\SPU\hell.exe: push()
+# 3 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 4 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 5 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:42:39, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:42:49
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe, файл: main.cpp, строка: 74, функция: void main_runner(int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xD03C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000040B63E in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txError()
+# 1 0x000000000041ECE7 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:42:39, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:52:25
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe, файл: main.cpp, строка: 74, функция: void main_runner(int),
+
+Сообщение: ВНЕЗАПНО: Логическая ошибка: Неверно, что "0".
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xC078 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000040B63E in C:\MIPT\SPU\hell.exe: (anonymous namespace)::TX::_txError()
+# 1 0x000000000041ECE7 in C:\MIPT\SPU\hell.exe: main_runner()
+# 2 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:42:39, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 05:53:19
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420181 в функции stack_ok(). Попытка прочесть данные по адресу 0x0000008900000000 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xD790 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420181 in C:\MIPT\SPU\hell.exe: stack_ok()
+# 2 0x000000000042093B in C:\MIPT\SPU\hell.exe: push()
+# 3 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 4 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 5 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:42:39, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 06:00:29
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420181 в функции stack_ok(). Попытка прочесть данные по адресу 0x0000008900000000 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xD790 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420181 in C:\MIPT\SPU\hell.exe: stack_ok()
+# 2 0x000000000042093B in C:\MIPT\SPU\hell.exe: push()
+# 3 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 4 0x000000000041EC8A in C:\MIPT\SPU\hell.exe: main_runner()
+# 5 0x000000000041ED6C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 05:42:39, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 06:00:29
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420141 в функции stack_ok(). Попытка прочесть данные по адресу 0x0000090200000004 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xDCFC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420141 in C:\MIPT\SPU\hell.exe: stack_ok()
+# 2 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 3 0x000000000041EC4A in C:\MIPT\SPU\hell.exe: main_runner()
+# 4 0x000000000041ED2C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 06:20:24, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 06:20:35
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\MIPT\SPU\hell.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0000000000420141 в функции stack_ok(). Попытка прочесть данные по адресу 0x0000090200000004 в модуле C:\MIPT\SPU\hell.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x0000000000448AF0 (64-bit), Flags: CMdRe0, Thread: 0xDCFC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0000000000420141 in C:\MIPT\SPU\hell.exe: stack_ok()
+# 2 0x000000000041DE22 in C:\MIPT\SPU\hell.exe: funk_PSH()
+# 3 0x000000000041EC4A in C:\MIPT\SPU\hell.exe: main_runner()
+# 4 0x000000000041ED2C in C:\MIPT\SPU\hell.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Nov  5 2024 06:20:24, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Nov 05 2024 06:20:35
+
+Run file:	C:\MIPT\SPU\hell.exe
+Directory:	C:\MIPT\SPU
+
+--------------------------------------------------

@@ -161,8 +161,7 @@ pop [8]
     push 0
     pop [20]
 
-    push 1488
-    look
+
     push [13]
     look
     push [0]

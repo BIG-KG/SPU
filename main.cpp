@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 int file_to_array(int **commandsArray, int inputFile)
 {
 
-    static int commands[512] = {};
+    static int commands[1000] = {};
     *commandsArray = commands;
 
     char *allStr                   = NULL;

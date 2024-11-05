@@ -7,7 +7,7 @@ struct tag
     int contain   = -1;
 };
 
-const int START_COMMAND_ARR_SIZE = 512;
+const int START_COMMAND_ARR_SIZE = 1000;
 
 typedef long long int int64_t;
 

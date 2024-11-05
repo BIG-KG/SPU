@@ -73,7 +73,26 @@ pop [26]
     sqrt
     pop [2]
 
+    push [8]
+    push [8]
+    mul
+
+    push [27]
+    push [27]
+    mul
+
+    push [26]
+    push [26]
+    mul
+
+    add
+    add
+    sqrt
+    pop [30]
+
     call :calculate_screen
+
+
 
     draw
 
@@ -247,27 +266,39 @@ pop [26]
 
     ^toch
 
-        push 10000
+        call :blik
+        pop DX
+        push DX
+        push DX
+        pop DX
 
         call :shirsh
         pop CX
         pop BX
         pop AX
 
+
+        push 40000
         push AX
         push AX
         mul
+        add
+        push DX
         add
         pop AX
 
         push BX
         push BX
         mul
+        push DX
+        add
         pop BX
 
         push CX
         push CX
         mul
+        push DX
+        add
         pop CX
 
         push AX
@@ -411,6 +442,59 @@ pop [26]
 
     ret
 
+^blik
+    push [18]
+    push [18]
+    mul
+
+    push [19]
+    push [19]
+    mul
+
+    push [20]
+    push [20]
+    mul
+
+    add
+    add
+    sqrt
+
+
+
+    push [7]
+    push [30]
+    call :angl
+    pop [22]
+    push [1]
+    push [22]
+    sub
+    pop [22]
+
+    push [22]
+    push [21]
+    add
+    cos
+    call :nl_0
+    pop DX
+    push DX
+    push DX
+    mul
+    push DX
+    mul
+    push DX
+    mul
+    push DX
+    mul
+    push DX
+    mul
+    push DX
+    mul
+    push 255
+    mul
+    push [4]
+    mul
+
+    ret
 
 
 ^angl

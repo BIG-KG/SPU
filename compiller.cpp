@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 
         else if (strcmp (command, "ptch") == 0)
         {
-            outputArray.commands[outputArray.currentCommand] = PTCH;
+            outputArray.commands[outputArray.currentCommand] = PTCH_MY;
         }
 
         else if (strcmp (command, "draw") == 0)
