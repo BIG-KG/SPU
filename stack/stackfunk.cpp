@@ -110,7 +110,7 @@ int stack_dump(int64_t name)
 int stack_size_chk (int64_t name, int addingSize)
 {
 
-    IF_ERR_GO_OUT(name);
+   // IF_ERR_GO_OUT(name);
 
     stack_t * ptrTargetStack = &((allStack.stacksArray)[name]);
     int sizeAfterAdd         = ptrTargetStack->currSize + addingSize;
@@ -157,7 +157,7 @@ int stack_size_chk (int64_t name, int addingSize)
     }
 
 
-    IF_ERR_GO_OUT(name);
+   // IF_ERR_GO_OUT(name);
 
     return 0;
 }
@@ -218,8 +218,8 @@ int64_t stack_ctor (void)
     ptrTargetStack->currSize = 0;
     ptrTargetStack->maxSize  = START_STACK_SIZE;
 
-    hasher (name, CHANGE_HASH);
-    IF_ERR_GO_OUT (name);
+   // hasher (name, CHANGE_HASH);
+    //IF_ERR_GO_OUT (name);
 
     return name;
 }
@@ -227,7 +227,7 @@ int64_t stack_ctor (void)
 int pop (int64_t name)
 {
 
-    IF_ERR_GO_OUT(name);
+   // IF_ERR_GO_OUT(name);
     stack_t * ptrTargetStack = &((allStack.stacksArray)[name]);
 
     if (ptrTargetStack->currSize < 1)
@@ -248,8 +248,8 @@ int pop (int64_t name)
 
     ptrTargetStack->currSize--;
 
-    hasher (name, CHANGE_HASH);
-    IF_ERR_GO_OUT(name);
+   // hasher (name, CHANGE_HASH);
+   // IF_ERR_GO_OUT(name);
 
     return returningEl;
 }
@@ -257,7 +257,7 @@ int pop (int64_t name)
 int push(int64_t name, int pushingEl)
 {
 
-    IF_ERR_GO_OUT(name);
+   // IF_ERR_GO_OUT(name);
 
     stack_t * ptrTargetStack = &((allStack.stacksArray)[name]);
 
@@ -271,20 +271,20 @@ int push(int64_t name, int pushingEl)
     ptrTargetStack->currSize++;
     *((int*)(ptrTargetStack->dataPtr) + (ptrTargetStack->currSize - 1)) = pushingEl;
 
-    hasher (name, CHANGE_HASH);
-    IF_ERR_GO_OUT(name);
+   // hasher (name, CHANGE_HASH);
+   // IF_ERR_GO_OUT(name);
 
-    return stack_ok(name);
+    return 0; //stack_ok(name);
 
 }
 
 int look(int64_t name, int ElNum){   // add stack to all names
 
-    IF_ERR_GO_OUT(name);
+   // IF_ERR_GO_OUT(name);
 
     stack_t * ptrTtargetStack = &((allStack.stacksArray)[name]);
 
-    IF_ERR_GO_OUT(name);
+   // IF_ERR_GO_OUT(name);
 
     return *((int*)(ptrTtargetStack->dataPtr) + (ElNum));
 
