@@ -14,17 +14,36 @@ pop [3]
 push 1
 pop [4]
 
-push 15
+push 20
 pop [5]
-push 15
+push 20
 pop [6]
 
 push 100
 pop [7]
 push 250
 pop [8]
+push -100
+pop [26]
+
 
 ^main
+
+    ^animation
+        call :draw_frame
+        push [26]
+        push 10
+        add
+        pop [26]
+
+        push [26]
+        push 100
+        jmpm :animation
+    end
+
+
+
+^draw_frame
     push [9]
     push [8]
     sub
@@ -34,25 +53,31 @@ pop [8]
     mul
 
     push [10]
-    push [10]
+    push [26]
+    sub
+    pop AX
+    push AX
+    push AX
     mul
     add
 
     push [11]
-    push [11]
+    push [27]
+    sub
+    pop AX
+    push AX
+    push AX
     mul
     add
 
     sqrt
     pop [2]
-    push [2]
-    look
 
     call :calculate_screen
 
     draw
 
-    end
+    ret
 
 ^calculate_screen
 
@@ -109,11 +134,7 @@ pop [8]
     mul
     sin
     pop [14]
-    push 111
-    look
     call :calculate_ray
-    push 222
-    look
 
     push [23]
     push 3
@@ -153,9 +174,6 @@ pop [8]
     push 0
     pop [20]
 
-    push 898
-    look
-
 
 
     ^while_z
@@ -189,11 +207,19 @@ pop [8]
         mul
 
         push [18]
-        push [18]
+        push [26]
+        sub
+        pop AX
+        push AX
+        push AX
         mul
 
         push [19]
-        push [19]
+        push [27]
+        sub
+        pop AX
+        push AX
+        push AX
         mul
 
         add
@@ -221,9 +247,7 @@ pop [8]
 
     ^toch
 
-        push 2500
-        push 333
-        look
+        push 10000
 
         call :shirsh
         pop CX
@@ -241,41 +265,27 @@ pop [8]
         mul
         pop BX
 
-        push 444
-        look
-
         push CX
         push CX
         mul
         pop CX
 
-        push 500
-        look
-
         push AX
-        push 501
-        look
         sqrt
-        push 503
-        look
-        call :nm_256
+        call :nm_255
 
-        push 505
-        look
+
 
         push BX
         sqrt
-        call :nm_256
+        call :nm_255
 
-        push 555
-        look
+
 
         push CX
         sqrt
-        call :nm_256
+        call :nm_255
 
-        push 555
-        look
 
         ret
 
@@ -327,41 +337,31 @@ pop [8]
     ret
 
 
-^nm_256
-    push 121
-    look
+^nm_255
+
     pop DX
     push DX
-    push 256
-    push 122
-    look
-    push DX
-    look
+    push 255
 
-    jmpl :less_256
 
-    push 123
-    look
+    jmpl :less_255
+
+
 
     push DX
     ret
 
-    ^less_256
-        push 124
-        look
-        push 256
+    ^less_255
+        push 255
         ret
 
 ^shirsh
-    push 777
-    look
     push [18]
     push [10]
     sub
     pop AX
     push AX
     push AX
-
     mul
 
     push [19]
@@ -370,7 +370,6 @@ pop [8]
     pop AX
     push AX
     push AX
-
     mul
 
     push [20]
@@ -379,7 +378,6 @@ pop [8]
     pop AX
     push AX
     push AX
-
     mul
 
     add
@@ -401,7 +399,7 @@ pop [8]
     push [21]
     cos
     call :nl_0
-    push 256
+    push 255
     mul
     push [3]
     mul
@@ -410,8 +408,7 @@ pop [8]
     push AX
     push AX
     push AX
-    push 888
-    look
+
     ret
 
 

@@ -54,7 +54,7 @@ DEF_CMD("sub", SUB, 0,
 
 DEF_CMD("look", LUK, 0,
 {
-    printf("look");
+    //printf("look");
     double a = (double)pop(SPU->stc) / SCALING_FACTOR;
     printf ("return look = %f\n", (a));
 })
@@ -85,10 +85,10 @@ DEF_CMD("jmpl", JMPL, 2,
 {
     int64_t a = pop (SPU->stc);
     int64_t b = pop (SPU->stc);
-    printf("a = %d     b = %d\n", a, b);
+    //printf("a = %d     b = %d\n", a, b);
     if (a <  b) SPU->ip = (*get_arg(command, SPU)) / SCALING_FACTOR - 1  ;
     else SPU->ip++;
-    printf("%d\n", SPU->ip);
+    //printf("%d\n", SPU->ip);
 })
 
 DEF_CMD("jmpe", JMPE, 2,
@@ -122,28 +122,29 @@ DEF_CMD("sqrt", SQRT, 0,
 
 DEF_CMD("draw", DRAW, 0,
 {
+    double x = 0;
+    double y = 0;
 
-    printf("DRAW\n");
-    for (int64_t i = 0; i < 15 * 15; i ++)
+    for (int64_t i = 0; i < 20 * 20; i ++)
     {
-       // printf(" %d ", (i * 3) + 50);
-        if((SPU->RAM)[i * 3 + 50] != 0)
-        {
-            printf(" %3d ", (SPU->RAM)[i * 3 + 50]/1000);
+        //printf(" %d ", (i * 3) + 50);
+        x = (double)(i % 20) * 20;
+        y = (double)(i / 20) * 20;
+        //printf("x, y = %lf %lf\n", x, y);
+        txSetFillColor(         RGB ( (int)(SPU->RAM)[i * 3 + 50]/1000,   (int)(SPU->RAM)[i * 3 + 51]/1000,      (int)(SPU->RAM)[i * 3 + 52]/1000) );
+        txRectangle	(x, y, x + 20, y + 20);
+       // printf(" %3d ", (SPU->RAM)[i * 3 + 52]/1000);
+        //if( (i + 1) % 20 == 0 ) printf("\n");
 
 
-        }
-
-        else
-        {
-            printf("     ", (SPU->RAM)[i]);
-        }
-
-        if( (i + 1) % 15 == 0 ) printf("\n");
     }
+
+
+           // printf(" %d ", (i * 3) + 50);
+
 })
 
-DEF_CMD("ptch", PTCH, 0,
+DEF_CMD("ptch", PTCH_MY, 0,
 {
     printf ("return ptch = _%c_\n", ((int64_t)pop(SPU->stc) / SCALING_FACTOR) );
 })

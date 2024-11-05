@@ -15,7 +15,7 @@ enum SPU_math_commands{
     RETURN,
     SQRT,
     DRAW,
-    PTCH,
+    PTCH_MY,
     INPT,
     SIN,
     COS,

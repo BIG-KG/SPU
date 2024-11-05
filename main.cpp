@@ -10,6 +10,7 @@
 #include "common_info.cpp"
 #include "processor_const.h"
 #include "processor_funks.h"
+#include "TXLib.h"
 
 #define DEF_CMD(name, CODE, argType, codetxt)             \
     void funk_##CODE(SPU_type *SPU, command_t *command){   \
@@ -30,6 +31,7 @@ command_to_funk code_to_funk[32] = {};
 
 void main_runner(int commandsFile)
 {
+
     int lastNum = 0;
     #define DEF_CMD(name, CODE, argType, codetxt)                \
         code_to_funk[ CODE ].commandNUM = CODE       ;           \
@@ -55,7 +57,7 @@ void main_runner(int commandsFile)
     // printf("\n\n\n");
     command_t *command = NULL;
 
-
+    txCreateWindow (400, 400);
     while(SPU.ip < SPU.numOfCommands && SPU.run == 1){
 
         command = (command_t *)(&SPU.commands[SPU.ip]);
